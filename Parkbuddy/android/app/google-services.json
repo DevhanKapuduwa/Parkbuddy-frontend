@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "226964192727",
+    "project_id": "parkbuddy-31f23",
+    "storage_bucket": "parkbuddy-31f23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226964192727:android:d2cb0e3bc01d7faafc9f92",
+        "android_client_info": {
+          "package_name": "com.example.plz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ-ajJZxYDMgzQcG8G5tipB6_a6uXXUX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226964192727:android:0be3138446958f60fc9f92",
+        "android_client_info": {
+          "package_name": "com.parkbuddy.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ-ajJZxYDMgzQcG8G5tipB6_a6uXXUX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
