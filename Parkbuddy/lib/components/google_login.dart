@@ -9,7 +9,7 @@ class GoogleLogin extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
       margin: const EdgeInsets.symmetric(horizontal: 60),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Colors.grey.shade100),
+          borderRadius: BorderRadius.circular(8), color: Colors.grey.shade400),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -19,7 +19,7 @@ class GoogleLogin extends StatelessWidget {
           ),
           const Text(
             "Sign-in with Google",
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500,color: Colors.black),
           ),
         ],
       ),

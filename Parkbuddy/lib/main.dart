@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plz/Pages/welcome.dart';
 import 'Pages/authrization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -25,7 +26,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Pagedecider(),
+      theme: ThemeData(brightness: Brightness.dark , primarySwatch: Colors.orange),
+      home: Welcome(),
     );
   }
 }

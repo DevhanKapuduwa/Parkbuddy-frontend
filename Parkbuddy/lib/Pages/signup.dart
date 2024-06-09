@@ -87,7 +87,7 @@ class Signup extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[900],
       body: Center(
         child: SafeArea(
             child: SingleChildScrollView(
@@ -100,7 +100,7 @@ class Signup extends StatelessWidget {
               const Icon(
                 Icons.car_crash,
                 size: 100,
-                color: Colors.black,
+                //color: Colors.black,
               ),
               const SizedBox(
                 height: 30,
@@ -109,7 +109,7 @@ class Signup extends StatelessWidget {
               const Text(
                 "Sign up",
                 style: TextStyle(
-                    color: Colors.black,
+                    //color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
@@ -153,7 +153,7 @@ class Signup extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: Colors.black,
+                      color: Colors.blueAccent,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: const Center(
                     child: Text(
@@ -172,19 +172,19 @@ class Signup extends StatelessWidget {
                   const Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: Colors.black12,
+                      color: Colors.grey,
                     ),
                   ),
                   Text(
                     " Or ",
                     style: TextStyle(
-                        color: Colors.grey.shade800,
+                        color: Colors.grey,
                         fontWeight: FontWeight.w600),
                   ),
                   const Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: Colors.black12,
+                      color: Colors.grey,
                     ),
                   ),
                 ],
@@ -208,7 +208,7 @@ class Signup extends StatelessWidget {
                   text: TextSpan(
                     text: "Already a member?",
                     style: TextStyle(
-                      color: Colors.grey.shade800,
+                      color: Colors.grey,
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                     ),

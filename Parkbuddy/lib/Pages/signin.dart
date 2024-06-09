@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:plz/Pages/homepage.dart';
+import 'package:plz/Pages/profile_menu.dart';
 import 'package:plz/components/login_page_textfields.dart';
 import 'package:plz/components/google_login.dart';
 import 'package:plz/Pages/signup.dart';
@@ -88,7 +91,7 @@ class Signin extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[900],
       body: Center(
         child: SafeArea(
             child: SingleChildScrollView(
@@ -101,7 +104,7 @@ class Signin extends StatelessWidget {
               const Icon(
                 Icons.car_crash,
                 size: 100,
-                color: Colors.black,
+                //color: Colors.black,
               ),
               const SizedBox(
                 height: 30,
@@ -110,7 +113,7 @@ class Signin extends StatelessWidget {
               const Text(
                 "Welcome back",
                 style: TextStyle(
-                    color: Colors.black,
+                    //color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
@@ -162,7 +165,7 @@ class Signin extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: Colors.black,
+                      color: Colors.blueAccent,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: const Center(
                     child: Text(
@@ -181,19 +184,19 @@ class Signin extends StatelessWidget {
                   const Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: Colors.black12,
+                      color: Colors.grey,
                     ),
                   ),
                   Text(
                     " Or continue with ",
                     style: TextStyle(
-                        color: Colors.grey.shade800,
+                        color: Colors.grey,
                         fontWeight: FontWeight.w600),
                   ),
                   const Expanded(
                     child: Divider(
                       thickness: 2,
-                      color: Colors.black12,
+                      color: Colors.grey,
                     ),
                   ),
                 ],
@@ -220,7 +223,7 @@ class Signin extends StatelessWidget {
                   text: TextSpan(
                     text: "Not a member?",
                     style: TextStyle(
-                      color: Colors.grey.shade800,
+                      color: Colors.grey,
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
                     ),
@@ -235,7 +238,19 @@ class Signin extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              ),
+
+
+
+              SizedBox(
+                height: 40,
+              ),
+
+
+              ProfileMenuWidget(
+                title: "Home",icon: LineAwesomeIcons.home_solid,onPress: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomePage())),
+              ),
             ],
           ),
         )),
