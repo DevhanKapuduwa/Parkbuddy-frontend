@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:plz/Pages/notifications.dart';
 import 'package:plz/Pages/profile_menu.dart';
 import 'package:plz/Pages/update_profile.dart';
 
@@ -14,13 +15,47 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(onPressed: () => Navigator.push(context,
             MaterialPageRoute(builder: (context) => HomePage())),icon: Icon(LineAwesomeIcons.angle_left_solid),),
-        title: Text(
-          'Profile',
-          style: Theme.of(context).textTheme.headlineMedium),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(LineAwesomeIcons.home_solid))
-        ],
+        title: Center(
+          child: Text(
+            'Profile',
+
+            style: TextStyle(
+            fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize, // Use the same font size as headlineSmall
+            fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
+
+        // actions: [
+        //   IconButton(onPressed: () => Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => HomePage())), icon: Icon(LineAwesomeIcons.home_solid))
+        // ],
+        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => HomePage())),
+                child: Icon(Icons.home)),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Notifications())),
+                child: Icon(Icons.notifications)),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Profile())),
+                child: Icon(Icons.person)),
+            label: '',
+          ),
+        ],
+      ),
 
       body: SingleChildScrollView(
         child: Container(
@@ -34,7 +69,7 @@ class Profile extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image(image: AssetImage('lib/images/ogf.jpg'),),
+                      child: Image(image: AssetImage('lib/images/profilepic.jpg'),),
                     ),
                   ),
 
@@ -56,9 +91,9 @@ class Profile extends StatelessWidget {
               ),
               SizedBox(height: 10),
 
-              Text('ssasdasd',
+              Text('Michael John',
               style: Theme.of(context).textTheme.headlineMedium),
-              Text('ssasdfdfsd',
+              Text('Michael.john@gmail.com',
                   style: Theme.of(context).textTheme.headlineSmall),
 
               SizedBox(height: 20),
@@ -69,7 +104,7 @@ class Profile extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => UpdateProfile())),
                     style:ElevatedButton.styleFrom(
                       backgroundColor: Colors.yellow,side: BorderSide.none,shape: StadiumBorder()
-                    ) ,child: Text('trtrtrt',style: TextStyle(color: Colors.black),)
+                    ) ,child: Text('Edit Profile',style: TextStyle(color: Colors.black),)
                 ),
               ),
 

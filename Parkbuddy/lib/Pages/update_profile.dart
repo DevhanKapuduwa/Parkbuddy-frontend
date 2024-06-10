@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/profile.dart';
 
+import 'homepage.dart';
+import 'notifications.dart';
+
 class UpdateProfile extends StatelessWidget {
   const UpdateProfile({super.key});
 
@@ -17,6 +20,33 @@ class UpdateProfile extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => HomePage())),
+                child: Icon(Icons.home)),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Notifications())),
+                child: Icon(Icons.notifications)),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+                onTap: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Profile())),
+                child: Icon(Icons.person)),
+            label: '',
+          ),
+        ],
+      ),
+
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(12),
@@ -29,7 +59,7 @@ class UpdateProfile extends StatelessWidget {
             height: 120,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image(image: AssetImage('lib/images/ogf.jpg'),),
+              child: Image(image: AssetImage('lib/images/profilepic.jpg'),),
             ),
           ),
 
@@ -97,7 +127,7 @@ class UpdateProfile extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => UpdateProfile())),
                         style:ElevatedButton.styleFrom(
                             backgroundColor: Colors.yellow,side: BorderSide.none,shape: StadiumBorder()
-                        ) ,child: Text('trtrtrt',style: TextStyle(color: Colors.black),)
+                        ) ,child: Text('Save Profile',style: TextStyle(color: Colors.black),)
                     ),
                   ),
 

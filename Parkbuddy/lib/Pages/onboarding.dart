@@ -45,23 +45,32 @@ class _OnboardingState extends State<Onboarding> {
                 },
                 itemBuilder:(_,i){
               return Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.only(top: 100.0),
                 child: Column(
                   children: [
                     Lottie.asset(contents[i].image,
-                     height: 300,),
-                    Text(contents[i].title,
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
+                     height: 350,),
+
+                    SizedBox(
+                      height: 20,
                     ),
+                    Center(
+                      child: Text(contents[i].title,
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
                     ),
-                    Text(contents[i].description,
-                      textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Text(contents[i].description,
+                        textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey
+                      ),
+                      ),
                     ),
                   ],
                 ),
