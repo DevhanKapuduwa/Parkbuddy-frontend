@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/notifications.dart';
 import 'package:plz/Pages/profile_menu.dart';
+import 'package:plz/Pages/settings_screen.dart';
 import 'package:plz/Pages/update_profile.dart';
 
 import 'homepage.dart';
@@ -114,7 +115,8 @@ class Profile extends StatelessWidget {
 
 
               ProfileMenuWidget(
-                title: "Settings",icon: LineAwesomeIcons.cog_solid,onPress: (){},
+                title: "Settings",icon: LineAwesomeIcons.cog_solid,onPress: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen())),
               ),
               ProfileMenuWidget(
                 title: "Billing Details",icon: LineAwesomeIcons.wallet_solid,onPress: (){},
