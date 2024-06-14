@@ -1,20 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:plz/Pages/profile.dart';
+import 'package:plz/Pages/shop.dart';
+import 'package:provider/provider.dart';
 import 'homepage.dart';
 import 'notifications.dart';
 
-class ParkDetailsPage extends StatelessWidget {
+class ParkDetailsPage extends StatefulWidget {
   final Park park;
 
-  ParkDetailsPage({required this.park});
+  const ParkDetailsPage({super.key, required this.park});
+
+  @override
+  State<ParkDetailsPage> createState() => _ParkDetailsPageState();
+}
+
+class _ParkDetailsPageState extends State<ParkDetailsPage> {
+  int quantityCount = 0;
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantityCount > 0) {
+        quantityCount--;
+      }
+    });
+  }
+
+  void incrementQuantity() {
+    setState(() {
+      quantityCount++;
+    });
+  }
+
+  void addToCart() {
+    if (quantityCount > 0) {
+      final shop = context.read<Shop>();
+      shop.addToCart(widget.park, quantityCount);
+
+      if (mounted) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            backgroundColor: Color.fromARGB(255, 138, 60, 55),
+            content: Text("Successfully added to cart",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              IconButton(onPressed: () {
+                Navigator.pop(context);
+
+                Navigator.pop(context);
+              },
+                icon: Icon(Icons.done,color: Colors.white,),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(park.name),
+        title: Text(widget.park.name),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -40,165 +94,138 @@ class ParkDetailsPage extends StatelessWidget {
           ),
         ],
       ),
-
       body: Column(
-          children: [
-            Image.asset(park.imagePath),
-            Text(
-              park.name,
-              style: TextStyle(fontSize: 24),
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: ListView(
+                children: [
+                  Image.asset(widget.park.imagePath),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      SizedBox(width: 5, height: 5),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow.shade800,
+                      ),
+                      SizedBox(width: 5, height: 5),
+                      Text(
+                        widget.park.rating,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    widget.park.name,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Rs. ' + widget.park.price + ' / hr',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    "Description",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    widget.park.description,
+                  ),
+                ],
+              ),
             ),
-            Text(
-              'Rs. ' + park.price + ' / hr',
-              style: TextStyle(fontSize: 24),
+          ),
+          Container(
+            color: Color.fromARGB(255, 138, 60, 55),
+            padding: EdgeInsets.all(25),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "\$" + widget.park.price,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.remove, color: Colors.white),
+                            onPressed: decrementQuantity,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40,
+                          child: Center(
+                            child: Text(
+                              quantityCount.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.add, color: Colors.white),
+                            onPressed: incrementQuantity,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 25),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.withOpacity(0.2) // Text color
+                  ),
+                  onPressed: addToCart,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Add To Cart",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-
+          ),
+        ],
       ),
     );
   }
 }
 
-//
-// import 'package:flutter/material.dart';
-// import '../components/action_button.dart';
-// import 'homepage.dart';
-// import 'package:get/get.dart';
-//
-// class ParkDetailsPage extends StatelessWidget {
-//   final Park park;
-//
-//   ParkDetailsPage({required this.park});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Stack(
-//         children: [
-//           Container(
-//             color: Colors.white,
-//             height: 100,
-//           ),
-//           SafeArea(
-//             child: SingleChildScrollView(
-//               child: Container(
-//                 width: double.infinity,
-//                 child: Column(
-//                   children: [
-//                     buildHeader(),
-//                     buildBody(),
-//
-//
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-//
-//
-//
-//   Widget buildHeader() {
-//     return Container(
-//       padding: EdgeInsets.symmetric(vertical: 16),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.only(
-//           bottomLeft: Radius.circular(30),
-//           bottomRight: Radius.circular(30),
-//         )
-//       ),
-//       child: Column(
-//         children: [
-//         AppBar(
-//         title: Text(park.name),
-//       ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget appBar() {
-//     return Container(
-//           decoration: BoxDecoration(
-//             color: Colors.white,
-//
-//           ),
-//       padding: EdgeInsets.symmetric(horizontal: 14,vertical: 16),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//
-//           ActionButton(
-//             onPressed: () => Get.back(),
-//             color: Colors.black, icon: Icons.keyboard_arrow_left,
-//             colorIcon: Colors.white,
-//           ),
-//           Row(
-//             children: [
-//               ActionButton(
-//                 onPressed: () {},
-//                 color: Colors.blue, icon: Icons.bookmark_border,
-//                 colorIcon: Colors.white,
-//               ),
-//               ActionButton(
-//                 onPressed: () {},
-//                 color: Colors.blue, icon: Icons.ios_share,colorIcon: Colors.white,
-//
-//               ),
-//
-//             ],
-//           ),
-//         ],
-//       ),
-//         );
-//   }
-//   Widget buildBody() => Container();
-// }
-//
-// // class ActionButton extends StatelessWidget {
-// //   const ActionButton({
-// //     super.key,
-// //     required this.color,
-// //     required this.colorIcon,
-// //     required this.icon,
-// //     required this.onPressed,
-// //   });
-// //
-// //   final Color color;
-// //   final Color colorIcon;
-// //   final IconData icon;
-// //   final void Function() onPressed;
-// //
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return InkWell(
-// //       onTap: onPressed,
-// //       child: Container(
-// //         width: 45,
-// //           height: 45,
-// //         margin: EdgeInsets.all(4),
-// //         decoration: BoxDecoration(
-// //           color: color,
-// //           borderRadius: BorderRadius.circular(15),
-// //           border: Border.all(
-// //             color: Colors.grey.shade300,
-// //             width: 1,
-// //           )
-// //         ),
-// //         child: Padding(
-// //           padding: EdgeInsets.all(8),
-// //           child: Icon(
-// //             icon,
-// //             color: colorIcon,
-// //             size: 28,
-// //           ),
-// //         ),
-// //       ),
-// //     );
-// //   }
-// // }
-//

@@ -43,6 +43,7 @@ dependencies:
   line_awesome_flutter: ^3.0.1
   lottie: ^3.1.2
   rive: ^0.13.7
+  provider:
 
 dev_dependencies:
   flutter_test:

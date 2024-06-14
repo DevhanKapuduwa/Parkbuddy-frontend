@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plz/Pages/cart_page.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
+import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/side_menu.dart';
 import 'package:plz/Pages/signin.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:plz/components/park_type.dart';
+import 'package:provider/provider.dart';
 
 import 'notifications.dart';
 
@@ -29,26 +32,6 @@ class _HomePageState extends State<HomePage> {
     ['Booked', false],
   ];
 
-  // List of parks for "Book now"
-  final List<Park> bookNowParks = [
-    Park(
-      imagePath: 'lib/images/ogf.jpg',
-      name: 'OGF',
-      price: '100',
-    ),
-    Park(
-      imagePath: 'lib/images/kcc.jpg',
-      name: 'KCC',
-      price: '200',
-    ),
-    Park(
-      imagePath: 'lib/images/ccc.jpg',
-      name: 'CCC',
-      price: '100',
-    ),
-
-  ];
-
   // List of parks for "Booked" (currently empty)
   final List<Park> bookedParks = [];
 
@@ -58,11 +41,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    displayedParks = bookNowParks;
+    // Initialize the displayedParks list here
+    displayedParks = [];
   }
 
   // User tap on park types
   void parkTypeSelected(int index) {
+    final shop = context.read<Shop>();
+    final bookNowParks = shop.bookNowParks;
+
     setState(() {
       // Makes every selection false by keeping true only desired
       for (int i = 0; i < parkType.length; i++) {
@@ -81,6 +68,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final shop = context.read<Shop>();
+    final bookNowParks = shop.bookNowParks;
+
+    // Initialize displayedParks in build method as well
+    if (displayedParks.isEmpty) {
+      displayedParks = bookNowParks;
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
 
@@ -99,9 +94,9 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Signin())),
+                context, MaterialPageRoute(builder: (context) => CartPage())),
             icon: const Icon(
-              Icons.logout_rounded,
+              Icons.shopping_cart,
               size: 35,
               color: Colors.white,
             ),
@@ -132,6 +127,7 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(Icons.person)),
             label: '',
           ),
+
         ],
       ),
       body: Column(
@@ -210,10 +206,14 @@ class Park {
   final String imagePath;
   final String name;
   final String price;
+  final String rating;
+  final String description;
 
   Park({
     required this.imagePath,
     required this.name,
     required this.price,
+    required this.rating,
+    required this.description,
   });
 }

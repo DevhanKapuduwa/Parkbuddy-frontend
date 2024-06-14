@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/welcome.dart';
+import 'package:provider/provider.dart';
 import 'Pages/authrization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -10,7 +12,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  //runApp(const MyApp());
+  runApp(
+      ChangeNotifierProvider(create: (context) => Shop(),
+        child: MyApp(),
+      ),
+  );
 }
 
 class MyApp extends StatefulWidget {
