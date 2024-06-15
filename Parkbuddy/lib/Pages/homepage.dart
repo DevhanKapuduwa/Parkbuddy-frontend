@@ -5,12 +5,10 @@ import 'package:plz/Pages/cart_page.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
-import 'package:plz/Pages/side_menu.dart';
-import 'package:plz/Pages/signin.dart';
+import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:plz/components/park_type.dart';
 import 'package:provider/provider.dart';
-
 import 'notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,7 +40,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     // Initialize the displayedParks list here
-    displayedParks = [];
+    final shop = context.read<Shop>();
+    displayedParks = shop.bookNowParks;
   }
 
   // User tap on park types
@@ -68,29 +67,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final shop = context.read<Shop>();
-    final bookNowParks = shop.bookNowParks;
-
-    // Initialize displayedParks in build method as well
-    if (displayedParks.isEmpty) {
-      displayedParks = bookNowParks;
-    }
-
     return Scaffold(
       backgroundColor: Colors.grey[900],
 
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0, top: 15),
-          child: IconButton(
-            icon: Icon(Icons.menu, size: 35, color: Colors.white),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SideMenu())),
-          ),
+        // Use the default drawer icon
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(Icons.menu, size: 35, color: Colors.white),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
         ),
-
         actions: [
           IconButton(
             onPressed: () => Navigator.push(
@@ -104,6 +97,115 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: AvatarCard(),
+
+              // Text(
+              //   'Drawer Header',
+              //   style: TextStyle(
+              //     color: Colors.white,
+              //     fontSize: 24,
+              //   ),
+              // ),
+            ),
+
+
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushReplacementNamed('/');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page1');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.edit_document),
+              title: Text('Edit profile'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.car_rental),
+              title: Text('Add a Vehicle'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.home_work),
+              title: Text('Book a Car Park'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.view_list),
+              title: Text('My Bookings'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.notifications),
+              title: Text('Notifications'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(height: 3,color: Colors.grey.shade800,),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Sign Out'),
+              onTap: () {
+                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+
+
+
+
+          ],
+        ),
+      ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -127,7 +229,6 @@ class _HomePageState extends State<HomePage> {
                 child: Icon(Icons.person)),
             label: '',
           ),
-
         ],
       ),
       body: Column(
@@ -217,3 +318,4 @@ class Park {
     required this.description,
   });
 }
+

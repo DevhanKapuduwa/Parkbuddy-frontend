@@ -8,18 +8,24 @@ class AvatarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(
-          "lib/images/profilepic.jpg",
-          width: 80,
-          height: 80,
-        ),
-        const SizedBox(width: 10),
-        Column(
+    return Column(
+      // children: [
+      //   Image.asset(
+      //     "lib/images/profilepic.jpg",
+      //     width: 80,
+      //     height: 80,
+      //   ),
+        //const SizedBox(width: 10),
+        //Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Image.asset(
+              "lib/images/profilepic.jpg",
+              width: 50,
+              height: 50,
+            ),
+
             const Text(
               "Michael John",
               style: TextStyle(
@@ -35,9 +41,10 @@ class AvatarCard extends StatelessWidget {
                 color: Colors.grey.shade600,
               ),
             )
-          ],
-        )
-      ],
+        //   ],
+        // ),
+    ],
     );
+    //);
   }
 }
