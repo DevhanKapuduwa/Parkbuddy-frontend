@@ -4,11 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:plz/Pages/cart_page.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
+import 'package:plz/Pages/settings_screen.dart';
 import 'package:plz/Pages/shop.dart';
+import 'package:plz/Pages/signin.dart';
+import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:plz/components/park_type.dart';
 import 'package:provider/provider.dart';
+
 import 'notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -69,7 +73,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
-
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -97,14 +100,13 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.orange,
               ),
               child: AvatarCard(),
 
@@ -116,116 +118,121 @@ class _HomePageState extends State<HomePage> {
               //   ),
               // ),
             ),
-
-
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Home'),
-              onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
-                Navigator.of(context).pushReplacementNamed('/');
-              },
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => HomePage())),
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
-              onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
-                Navigator.of(context).pushNamed('/page1');
-              },
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Profile())),
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.edit_document),
               title: Text('Edit profile'),
-              onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
-                Navigator.of(context).pushNamed('/page2');
-              },
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UpdateProfile())),
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.car_rental),
               title: Text('Add a Vehicle'),
               onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pop(); // Close the drawer
                 Navigator.of(context).pushNamed('/page2');
               },
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.home_work),
               title: Text('Book a Car Park'),
               onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pop(); // Close the drawer
                 Navigator.of(context).pushNamed('/page2');
               },
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.view_list),
               title: Text('My Bookings'),
               onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
+                Navigator.of(context).pop(); // Close the drawer
                 Navigator.of(context).pushNamed('/page2');
               },
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
-              onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
-                Navigator.of(context).pushNamed('/page2');
-              },
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen())),
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Notifications'),
-              onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
-                Navigator.of(context).pushNamed('/page2');
-              },
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Notifications())),
             ),
-            Divider(height: 3,color: Colors.grey.shade800,),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Sign Out'),
-              onTap: () {
-                Navigator.of(context).pop();  // Close the drawer
-                Navigator.of(context).pushNamed('/page2');
-              },
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Signin())),
             ),
-
-
-
-
           ],
         ),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => HomePage())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage())),
                 child: Icon(Icons.home)),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Notifications())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Notifications())),
                 child: Icon(Icons.notifications)),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Profile())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Profile())),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -318,4 +325,3 @@ class Park {
     required this.description,
   });
 }
-

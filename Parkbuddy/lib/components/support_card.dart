@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'contants_set.dart';
 
 class SupportCard extends StatelessWidget {
@@ -12,7 +13,7 @@ class SupportCard extends StatelessWidget {
       width: double.infinity,
       height: 100,
       decoration: BoxDecoration(
-        color: Colors.yellow.withOpacity(0.05),
+        color: Colors.orange.withOpacity(0.15),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -21,14 +22,14 @@ class SupportCard extends StatelessWidget {
           Icon(
             Icons.support_agent,
             size: 50,
-            color: Colors.yellow,
+            color: Colors.orange,
           ),
           SizedBox(width: 10),
           Text(
             "Feel Free to Ask, We Are Ready to Help",
             style: TextStyle(
               fontSize: ksmallFontSize,
-              color: ksecondryColor,
+              color: Colors.orange,
               fontWeight: FontWeight.bold,
             ),
           )

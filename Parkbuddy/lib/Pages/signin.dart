@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/homepage.dart';
 import 'package:plz/Pages/profile_menu.dart';
-import 'package:plz/components/login_page_textfields.dart';
-import 'package:plz/components/google_login.dart';
 import 'package:plz/Pages/signup.dart';
+import 'package:plz/components/google_login.dart';
+import 'package:plz/components/login_page_textfields.dart';
 
 class Signin extends StatelessWidget {
   Signin({super.key});
@@ -148,8 +148,10 @@ class Signin extends StatelessWidget {
                     Text(
                       'Forgot Password?',
                       style: TextStyle(
-                          color: Colors.blue.shade500,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
@@ -165,12 +167,16 @@ class Signin extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: Colors.blueAccent,
+                      //color: Colors.blueAccent,
+                      color: Colors.orange,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: const Center(
                     child: Text(
                       "Sign in",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
@@ -190,8 +196,7 @@ class Signin extends StatelessWidget {
                   Text(
                     " Or continue with ",
                     style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600),
+                        color: Colors.grey, fontWeight: FontWeight.w600),
                   ),
                   const Expanded(
                     child: Divider(
@@ -231,7 +236,7 @@ class Signin extends StatelessWidget {
                       TextSpan(
                         text: " Register now",
                         style: TextStyle(
-                            color: Colors.blue.shade400,
+                            color: Colors.orange,
                             fontWeight: FontWeight.w600,
                             fontSize: 14),
                       )
@@ -240,16 +245,15 @@ class Signin extends StatelessWidget {
                 ),
               ),
 
-
-
               SizedBox(
                 height: 40,
               ),
 
-
               ProfileMenuWidget(
-                title: "Home",icon: LineAwesomeIcons.home_solid,onPress: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomePage())),
+                title: "Home",
+                icon: LineAwesomeIcons.home_solid,
+                onPress: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage())),
               ),
             ],
           ),

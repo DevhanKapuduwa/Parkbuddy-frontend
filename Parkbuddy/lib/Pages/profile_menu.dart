@@ -17,7 +17,6 @@ class ProfileMenuWidget extends StatelessWidget {
   final bool endIcon;
   final Color? textColor;
 
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -27,23 +26,32 @@ class ProfileMenuWidget extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: Colors.yellowAccent.withOpacity(0.1),
+          color: Colors.orangeAccent.withOpacity(0.15),
         ),
-        child: Icon(icon, color: Colors.yellowAccent),
+        child: Icon(icon, color: Colors.orange),
       ),
       title: Text(
-          title,
-          style: Theme.of(context).textTheme.bodySmall?.apply(color: textColor)
+        title,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              fontSize: 15,
+              color: textColor,
+            ),
       ),
-      trailing: endIcon? Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Colors.grey.withOpacity(0.1),
-        ),
-        child: Icon(LineAwesomeIcons.angle_right_solid, size: 18,color: Colors.grey,),
-      ) : null,
+      trailing: endIcon
+          ? Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: Colors.grey.withOpacity(0.15),
+              ),
+              child: Icon(
+                LineAwesomeIcons.angle_right_solid,
+                size: 18,
+                color: Colors.white,
+              ),
+            )
+          : null,
     );
   }
 }

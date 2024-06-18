@@ -1,9 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/welcome.dart';
 import 'package:provider/provider.dart';
-import 'Pages/authrization.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+import 'Pages/profile_image_provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -12,11 +13,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  //runApp(const MyApp());
   runApp(
-      ChangeNotifierProvider(create: (context) => Shop(),
-        child: MyApp(),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Shop()),
+        ChangeNotifierProvider(
+            create: (context) =>
+                ProfileImageProvider()), // Add the ProfileImageProvider
+      ],
+      child: MyApp(),
+    ),
   );
 }
 
@@ -29,11 +35,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark , primarySwatch: Colors.orange),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.orange,
+      ),
       home: Welcome(),
     );
   }

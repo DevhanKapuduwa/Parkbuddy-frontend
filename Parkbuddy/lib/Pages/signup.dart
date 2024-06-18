@@ -153,7 +153,7 @@ class Signup extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: Colors.blueAccent,
+                      color: Colors.orange,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: const Center(
                     child: Text(
@@ -178,8 +178,7 @@ class Signup extends StatelessWidget {
                   Text(
                     " Or ",
                     style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600),
+                        color: Colors.grey, fontWeight: FontWeight.w600),
                   ),
                   const Expanded(
                     child: Divider(
@@ -216,7 +215,7 @@ class Signup extends StatelessWidget {
                       TextSpan(
                         text: " Signin now",
                         style: TextStyle(
-                            color: Colors.blue.shade400,
+                            color: Colors.orange,
                             fontWeight: FontWeight.w600,
                             fontSize: 14),
                       )

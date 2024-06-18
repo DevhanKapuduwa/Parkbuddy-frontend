@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../Pages/setting.dart';
 import 'contants_set.dart';
 
@@ -21,10 +22,10 @@ class SettingTile extends StatelessWidget {
             width: 50,
             margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
-              color: Colors.yellow.withOpacity(0.1),
+              color: Colors.orange.withOpacity(0.15),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Icon(setting.icon, color: Colors.yellow),
+            child: Icon(setting.icon, color: Colors.orange),
           ),
           const SizedBox(width: 10),
           Text(

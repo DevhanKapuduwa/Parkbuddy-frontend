@@ -14,7 +14,7 @@ class _WelcomeState extends State<Welcome> {
   void initState() {
     super.initState();
     // Navigate to the Onboarding screen after 3 seconds
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 4), () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Onboarding()),
