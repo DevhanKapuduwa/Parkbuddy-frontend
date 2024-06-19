@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:plz/Pages/profile.dart';
 import 'package:provider/provider.dart';
 
 import 'custom_dropdown.dart';
 import 'homepage.dart';
 import 'notifications.dart';
+import 'profile.dart';
 import 'shop.dart';
 
 class ParkDetailsPage extends StatefulWidget {
@@ -37,7 +37,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
   void addToCart() {
     if (quantityCount > 0) {
       final shop = context.read<Shop>();
-      shop.addToCart(widget.park, quantityCount);
+      shop.addToCart(widget.park, quantityCount, dropdownValue);
 
       if (mounted) {
         showDialog(
@@ -78,10 +78,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
         title: Text(
           widget.park.name,
           style: TextStyle(
-            fontSize: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.fontSize, // Use the same font size as headlineSmall
+            fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -139,12 +136,19 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    widget.park.extension,
-                    style: TextStyle(fontSize: 24),
+                  SizedBox(height: 5),
+                  Divider(height: 2),
+                  SizedBox(height: 5),
+                  Center(
+                    child: Text(
+                      widget.park.extension,
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
+                  Divider(height: 2),
+                  SizedBox(height: 5),
                   Text(
                     "Description",
                     style: TextStyle(
@@ -226,13 +230,27 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                     ),
                   ],
                 ),
-                CustomDropdown(
-                  initialValue: dropdownValue,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      dropdownValue = newValue;
-                    });
-                  },
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Reservation Time : ",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    CustomDropdown(
+                      initialValue: dropdownValue,
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                        });
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(height: 25),
                 ElevatedButton(
@@ -244,16 +262,13 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        "Add To Cart",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
+                        "Book Now",
+                        style: TextStyle(color: Colors.white),
                       ),
-                      Icon(
-                        Icons.arrow_forward_rounded,
-                        color: Colors.black,
+                      Spacer(),
+                      Text(
+                        "Rs. ${quantityCount * int.parse(widget.park.price)}",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
