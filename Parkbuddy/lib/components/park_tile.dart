@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Pages/homepage.dart';
+import '../Pages/shop.dart';
 
 class ParkTile extends StatelessWidget {
   final Park park;
@@ -14,7 +14,7 @@ class ParkTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, bottom: 70.0),
+      padding: const EdgeInsets.only(left: 25.0, bottom: 40.0),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -31,7 +31,7 @@ class ParkTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(park.imagePath),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
@@ -49,7 +49,7 @@ class ParkTile extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               // Price
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),

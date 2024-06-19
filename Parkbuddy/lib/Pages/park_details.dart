@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:plz/Pages/profile.dart';
-import 'package:plz/Pages/shop.dart';
 import 'package:provider/provider.dart';
+
+import 'custom_dropdown.dart';
 import 'homepage.dart';
 import 'notifications.dart';
+import 'shop.dart';
 
 class ParkDetailsPage extends StatefulWidget {
   final Park park;
@@ -16,6 +18,7 @@ class ParkDetailsPage extends StatefulWidget {
 
 class _ParkDetailsPageState extends State<ParkDetailsPage> {
   int quantityCount = 0;
+  String dropdownValue = "00 : 00 A.M.";
 
   void decrementQuantity() {
     setState(() {
@@ -41,20 +44,25 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
           context: context,
           barrierDismissible: false,
           builder: (context) => AlertDialog(
-            backgroundColor: Color.fromARGB(255, 138, 60, 55),
-            content: Text("Successfully added to cart",
-            style: TextStyle(
-              color: Colors.white,
-            ),
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Successfully added to cart",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
             actions: [
-              IconButton(onPressed: () {
-                Navigator.pop(context);
-
-                Navigator.pop(context);
-              },
-                icon: Icon(Icons.done,color: Colors.white,),
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.done,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
@@ -67,28 +75,38 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.park.name),
+        title: Text(
+          widget.park.name,
+          style: TextStyle(
+            fontSize: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.fontSize, // Use the same font size as headlineSmall
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => HomePage())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage())),
                 child: Icon(Icons.home)),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Notifications())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Notifications())),
                 child: Icon(Icons.notifications)),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Profile())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Profile())),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -116,20 +134,17 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 10),
                   Text(
-                    widget.park.name,
+                    widget.park.extension,
                     style: TextStyle(fontSize: 24),
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    'Rs. ' + widget.park.price + ' / hr',
-                    style: TextStyle(fontSize: 24),
-                  ),
                   Text(
                     "Description",
                     style: TextStyle(
@@ -139,23 +154,33 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    widget.park.description,
+                  Container(
+                    height: 150, // Adjust the height as needed
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        child: Text(
+                          widget.park.description,
+                          style: TextStyle(
+                              fontSize: 16), // Adjust text style as needed
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           Container(
-            color: Color.fromARGB(255, 138, 60, 55),
-            padding: EdgeInsets.all(25),
+            color: Colors.orange,
+            padding: EdgeInsets.only(top: 15, bottom: 25, left: 25, right: 25),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "\$" + widget.park.price,
+                      "Rs. " + widget.park.price + " / hr",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -166,7 +191,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.black.withOpacity(0.2),
                             shape: BoxShape.circle,
                           ),
                           child: IconButton(
@@ -175,10 +200,10 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                           ),
                         ),
                         SizedBox(
-                          width: 40,
+                          width: 70,
                           child: Center(
                             child: Text(
-                              quantityCount.toString(),
+                              quantityCount.toString() + " hrs",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -189,7 +214,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.black.withOpacity(0.2),
                             shape: BoxShape.circle,
                           ),
                           child: IconButton(
@@ -201,21 +226,34 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                     ),
                   ],
                 ),
+                CustomDropdown(
+                  initialValue: dropdownValue,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                ),
                 SizedBox(height: 25),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.withOpacity(0.2) // Text color
+                    backgroundColor: Colors.grey.withOpacity(0.2), // Text color
                   ),
                   onPressed: addToCart,
                   child: Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
                         "Add To Cart",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                       Icon(
                         Icons.arrow_forward_rounded,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ],
                   ),
@@ -228,4 +266,3 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
     );
   }
 }
-

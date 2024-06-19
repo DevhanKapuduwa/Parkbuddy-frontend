@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plz/Pages/bookings.dart';
 import 'package:plz/Pages/cart_page.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
@@ -10,9 +11,9 @@ import 'package:plz/Pages/signin.dart';
 import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/park_tile.dart';
-import 'package:plz/components/park_type.dart';
 import 'package:provider/provider.dart';
 
+import 'book_now.dart';
 import 'notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,15 +29,6 @@ class _HomePageState extends State<HomePage> {
     FirebaseAuth.instance.signOut();
   }
 
-  // List of park types
-  final List parkType = [
-    ['Book now', true],
-    ['Booked', false],
-  ];
-
-  // List of parks for "Booked" (currently empty)
-  final List<Park> bookedParks = [];
-
   // Currently displayed parks
   List<Park> displayedParks = [];
 
@@ -48,27 +40,6 @@ class _HomePageState extends State<HomePage> {
     displayedParks = shop.bookNowParks;
   }
 
-  // User tap on park types
-  void parkTypeSelected(int index) {
-    final shop = context.read<Shop>();
-    final bookNowParks = shop.bookNowParks;
-
-    setState(() {
-      // Makes every selection false by keeping true only desired
-      for (int i = 0; i < parkType.length; i++) {
-        parkType[i][1] = false;
-      }
-      parkType[index][1] = true;
-
-      // Update the displayed parks based on the selected type
-      if (index == 0) {
-        displayedParks = bookNowParks;
-      } else if (index == 1) {
-        displayedParks = bookedParks;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +47,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        // Use the default drawer icon
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -109,14 +79,6 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.orange,
               ),
               child: AvatarCard(),
-
-              // Text(
-              //   'Drawer Header',
-              //   style: TextStyle(
-              //     color: Colors.white,
-              //     fontSize: 24,
-              //   ),
-              // ),
             ),
             ListTile(
               leading: Icon(Icons.home),
@@ -267,22 +229,119 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(height: 25),
-          // Horizontal ListView of park types
-          Container(
-            height: 50,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: parkType.length,
-                itemBuilder: (context, index) {
-                  return ParkType(
-                    parkType: parkType[index][0],
-                    isSelected: parkType[index][1],
-                    onTap: () {
-                      parkTypeSelected(index);
-                    },
-                  );
-                }),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    padding:
+                        MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BookNowPage()),
+                    );
+                  },
+                  child: Container(
+                    width: 180,
+                    height: 50,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          color: Colors.black,
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          child: Center(
+                            child: Text(
+                              'Book Now',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.orange,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              //Spacer(),
+
+              Padding(
+                padding: const EdgeInsets.only(right: 25.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    padding:
+                        MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BookingsPage()),
+                    );
+                  },
+                  child: Container(
+                    width: 154,
+                    height: 50,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          color: Colors.black,
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          child: Center(
+                            child: Text(
+                              'Bookings',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.orange,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
+
+          SizedBox(
+            height: 20,
+          ),
+
+          // Popular car parks title
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Popular car parks",
+                style: GoogleFonts.bebasNeue(fontSize: 30),
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
           // Horizontal ListView of park tiles
           Expanded(
             child: ListView.builder(
@@ -310,18 +369,22 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class Park {
-  final String imagePath;
-  final String name;
-  final String price;
-  final String rating;
-  final String description;
-
-  Park({
-    required this.imagePath,
-    required this.name,
-    required this.price,
-    required this.rating,
-    required this.description,
-  });
-}
+// class Park {
+//   final String imagePath;
+//   final String name;
+//   final String price;
+//   final String rating;
+//   final String description;
+//   final String extension;
+//   int quantity;
+//
+//   Park({
+//     required this.imagePath,
+//     required this.name,
+//     required this.price,
+//     required this.rating,
+//     required this.description,
+//     required this.extension,
+//     this.quantity = 1,
+//   });
+// }
