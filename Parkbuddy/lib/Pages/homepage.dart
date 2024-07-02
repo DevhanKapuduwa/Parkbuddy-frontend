@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plz/Pages/bookings.dart';
 import 'package:plz/Pages/cart_page.dart';
+import 'package:plz/Pages/map_page.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/settings_screen.dart';
@@ -193,7 +194,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Notifications())),
+                    MaterialPageRoute(builder: (context) => MapPage())),
                 child: Icon(Icons.notifications)),
             label: '',
           ),
