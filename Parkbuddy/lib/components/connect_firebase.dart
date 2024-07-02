@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 
 var Park_lot_status={};
 
-void getuser(){
+getuser() async{
   final db = FirebaseFirestore.instance;
   final docRef = db.collection("Car_Parks").doc("bandu@gmail.com");
-  docRef.get().then(
+  await docRef.get().then(
         (DocumentSnapshot doc) {
       final data = doc.data() as Map<String, dynamic>;
       print("Current data: ");

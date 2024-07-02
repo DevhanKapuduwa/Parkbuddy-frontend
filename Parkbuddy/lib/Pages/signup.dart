@@ -69,8 +69,9 @@ class Signup extends StatelessWidget {
       );
 
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: useremailcontroller.text, password: passwordcontroller.text);
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: useremailcontroller.text, password: passwordcontroller.text);
+        // await FirebaseAuth.instance.signInWithEmailAndPassword(
+        //     email: , password: );
         Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         print(e.code);

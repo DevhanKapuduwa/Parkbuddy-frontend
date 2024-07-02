@@ -72,12 +72,17 @@ class Signin extends StatelessWidget {
         },
       );
 
+      print("CHecking");
+
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: useremailcontroller.text, password: passwordcontroller.text);
-        Navigator.pop(context);
+        await FirebaseAuth.instance.signInWithEmailAndPassword(email: useremailcontroller.text, password: passwordcontroller.text);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
       } on FirebaseAuthException catch (e) {
-        print(e.code);
+        print("Error connecting: "+e.code);
         Navigator.pop(context);
         if (e.code == 'user-not-found' || e.code == 'invalid-email') {
           //popup for username not found

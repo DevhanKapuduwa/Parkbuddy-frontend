@@ -12,6 +12,7 @@ import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:plz/components/connect_firebase.dart';
 
 import 'book_now.dart';
 import 'notifications.dart';
@@ -27,6 +28,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void userlogout() {
     FirebaseAuth.instance.signOut();
+  }
+
+  getcuruser() async {
+    await get_info_about_Car_park();
+
   }
 
   // Currently displayed parks
@@ -226,6 +232,7 @@ class _HomePageState extends State<HomePage> {
                   borderSide: BorderSide(color: Colors.grey.shade600),
                 ),
               ),
+              onChanged:(e)=>getcuruser(),
             ),
           ),
           SizedBox(height: 25),
