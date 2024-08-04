@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "parkingapp-xnkw",
+  "private_key_id": "31f99ba596ae9be8b93058eb54f885c3ae085a20",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDOeQqIIa+WCEDF\nneTY30bzkhdn2oetEx/ob/LmOm/V1v6+KEOvVFJvVPPCqSJTRQlnA1BQPZZZUVjl\nFm5hPuf5lHGagyIMIGNgPjy5gNuzYPkkMS7VFk/+URbHCUbQ7T8uxLAxqgkg2hJh\nbGrDy7oA/53yfqmVWujKYt7bXpXLmRQ1cNx99YMKw8YP493zz5ITPADxIghxxv8G\neHqUfQBUkLQ2uCDII6efBXgp+nDq9LsYTjLAoNpZvUPR+jS0Z8M2+s4ddbqyqU+f\nDAISTvhAsLVQWRVnm83HGNTRsbhE4qANPVUh3ZzaZTwHVKaSaC9bcgHJvIoT3imu\nSp8DPtCVAgMBAAECggEADsUcNUJ09+kYOmrB86epQNmgYKwCd6WTa0JoNa2pfA/D\nV7az/NIDNvafR2YSUAhIv2c+crcCedo2tJCcYyAnt7QK77rWD9hYnjUQN/7uoyWF\nPQsNpsL6rvPTCs2a6hgxTwxVRFWTDe1mUjTPaw6Npu5M42DJ4HwehK0k9Ga5lX+k\nFdUs0TkD2SkiqmnZVPbxj+WRzPff7KL2gNOGPJFYJmR6kSlSZdVhL5BBMcBf09Rc\n9iUZYkK5beGWnc4RvJoUfIxR5W5cmkh+egykRIdMwjAsL/HGGZAIKawO+3GMEDlk\ndCPSJfIBO8EJfhP5H6JE7GEzYn40dx3V/d0NOd1eUQKBgQDyl/OMp5GRQsNUMwSj\nJiI7AY9qukqgv+PHAhozadg/YmiPc9/og1SWKGbp3+VA6vWs4vntVMXTMpBqwM+l\nQ4k5RZ9LgL4xQas6YCPJKEXdqyJlLJBlI/eeA6cjPYhTa/sFAo4eytLP/ZJvXGwQ\nJ1oC+MhBuQYYz6ett/KbhwFTKQKBgQDZ4hP83FxVC2nHf/W2u1nbGIdxt6oiQRHM\ngEj1zvAt7Pr/ALgCJWw9fNaqywxa9E81rbjYDdP23/NLNSZ4wtnyeBR4ra9obKVm\nAUc8pThCHompAQLsRovkmx+/5PecigwugJcUPhQ/EKpuuLduejuC1gmyLQCnWEXl\nMcw8ls9LjQKBgA0wW6pa9dwK4Cm0uFzSVuwUUqK/zAzfQdfw8lG3QG15wSuDZjny\n4edj/OxcIs+bto2WrXXMtRCdYCKdpuxaNpypf1aQgkaVRmTfEzL9gIbjpfQQLy2A\nfhbWJgEReFbouPX1xJpB9qIeLBbn1GwwZ4Ff2ytPjthMedZE+Oiht125AoGBALLK\n7WH7Jh13jybxnx2DIhpDR6oOcCNJyCRLRRPI65iUNeeZnGXOdcMDNVjT5GCiyHkh\nBGTu+/hDD++wPtCr/JMW7J2W0TDcruFEvUNLxR2k14wC03Y18cf3b5dVecdQFOz4\nAoHO62hQ8bqIA6Y50ansn+pBOZ8ZNcn9Ej7J9nNlAoGBAI2t6IAtHwGVe5d739dY\n2tAng/JWGF0HylMM4G/1xYAULSyyJw9v6bBFFXxNDkv67DCDK3/nthLkbw+2pWqn\n5jSZyMXQBf+j9POpNRS0mPPK5hQwzYTwM55K5Wxur3IgT6hGrVTiaFBlwZ/eMhBy\n5t36yeLrJ2tFa2iJ49f0tcxh\n-----END PRIVATE KEY-----\n",
+  "client_email": "parkingapp@parkingapp-xnkw.iam.gserviceaccount.com",
+  "client_id": "114150232675074090611",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/parkingapp%40parkingapp-xnkw.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

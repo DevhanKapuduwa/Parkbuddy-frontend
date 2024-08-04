@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plz/Pages/bookings.dart';
 import 'package:plz/Pages/cart_page.dart';
+import 'package:plz/Pages/chat_page.dart';
 import 'package:plz/Pages/map_page.dart';
+import 'package:plz/Pages/ordinalbot.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
-import 'package:plz/Pages/settings_screen.dart';
 import 'package:plz/Pages/shop.dart';
-import 'package:plz/Pages/signin.dart';
 import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/avatar_card.dart';
+import 'package:plz/components/connect_firebase.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:plz/components/connect_firebase.dart';
 
 import 'book_now.dart';
-import 'notifications.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -33,7 +32,6 @@ class _HomePageState extends State<HomePage> {
 
   getcuruser() async {
     await get_info_about_Car_park();
-
   }
 
   // Currently displayed parks
@@ -157,7 +155,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingsScreen())),
+                  MaterialPageRoute(builder: (context) => Ordinalbot())),
             ),
             Divider(
               height: 3,
@@ -166,8 +164,8 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Notifications'),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Notifications())),
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ChatPage())),
             ),
             Divider(
               height: 3,
@@ -177,7 +175,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.logout),
               title: Text('Sign Out'),
               onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Signin())),
+                  context, MaterialPageRoute(builder: (context) => MapPage())),
             ),
           ],
         ),
@@ -233,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                   borderSide: BorderSide(color: Colors.grey.shade600),
                 ),
               ),
-              onChanged:(e)=>getcuruser(),
+              onChanged: (e) => getcuruser(),
             ),
           ),
           SizedBox(height: 25),

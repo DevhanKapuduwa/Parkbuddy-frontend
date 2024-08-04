@@ -14,7 +14,7 @@ class ParkTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, bottom: 40.0),
+      padding: const EdgeInsets.only(left: 25.0, bottom: 30.0),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
