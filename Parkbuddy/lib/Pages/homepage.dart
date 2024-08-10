@@ -1,6 +1,9 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plz/Pages/authrization.dart';
 import 'package:plz/Pages/bookings.dart';
 import 'package:plz/Pages/cart_page.dart';
 import 'package:plz/Pages/chat_page.dart';
@@ -9,10 +12,12 @@ import 'package:plz/Pages/ordinalbot.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
+import 'package:plz/Pages/signin.dart';
 import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
 import 'package:plz/components/park_tile.dart';
+import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
 import 'book_now.dart';
@@ -26,12 +31,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var current_User;
+
   void userlogout() {
     FirebaseAuth.instance.signOut();
   }
 
   getcuruser() async {
-    await get_info_about_Car_park();
+    var cur_user=await getUser(widget.user?.email??"");
+
+    current_User=cur_user;
+
+
+
   }
 
   // Currently displayed parks
@@ -43,6 +55,7 @@ class _HomePageState extends State<HomePage> {
     // Initialize the displayedParks list here
     final shop = context.read<Shop>();
     displayedParks = shop.bookNowParks;
+    getcuruser();
   }
 
   @override
@@ -174,8 +187,10 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Sign Out'),
-              onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MapPage())),
+                onTap: ()=>{
+                userlogout(),
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Pagedecider()))
+                }
             ),
           ],
         ),
@@ -231,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                   borderSide: BorderSide(color: Colors.grey.shade600),
                 ),
               ),
-              onChanged: (e) => getcuruser(),
+              onChanged: (e) => getcuruser(),//change this later
             ),
           ),
           SizedBox(height: 25),
@@ -249,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BookNowPage()),
+                      MaterialPageRoute(builder: (context) => BookNowPage(current_User: current_User)),
                     );
                   },
                   child: Container(
@@ -361,7 +376,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ParkDetailsPage(park: park),
+                        builder: (context) => ParkDetailsPage(park: park,current_User: current_User,),
                       ),
                     );
                   },

@@ -4,6 +4,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
+import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
 import '../components/park_tile.dart';
@@ -11,7 +12,8 @@ import 'homepage.dart';
 import 'notifications.dart';
 
 class BookNowPage extends StatefulWidget {
-  const BookNowPage({super.key});
+  final MobileUser current_User;
+  BookNowPage({super.key,required this.current_User});
 
   @override
   _BookNowPageState createState() => _BookNowPageState();
@@ -25,8 +27,19 @@ class _BookNowPageState extends State<BookNowPage> {
   void initState() {
     super.initState();
     // Initialize the displayedParks list here
-    final shop = context.read<Shop>();
-    displayedParks = shop.bookNowParks;
+    // final shop = context.read<Shop>();
+    // displayedParks = shop.bookNowParks;
+    // print("Park list");
+    // print(getparks());
+    _initializeDisplayedParks();
+  }
+  Future<void> _initializeDisplayedParks() async {
+    // Get the parks data from the database
+    List<Park> parks = await getparks();
+    // Update the state with the fetched parks
+    setState(() {
+      displayedParks = parks;
+    });
   }
 
   @override
@@ -156,7 +169,7 @@ class _BookNowPageState extends State<BookNowPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ParkDetailsPage(park: park),
+                          builder: (context) => ParkDetailsPage(park: park,current_User: widget.current_User),
                         ),
                       );
                     },

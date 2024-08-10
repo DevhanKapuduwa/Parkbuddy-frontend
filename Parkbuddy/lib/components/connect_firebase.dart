@@ -1,19 +1,46 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
+import 'package:plz/components/user.dart';
+
+import '../Pages/shop.dart';
+
 
 var Park_lot_status={};
 
-getuser() async{
+Future<MobileUser> getUser(String userId) async {
   final db = FirebaseFirestore.instance;
-  final docRef = db.collection("Car_Parks").doc("bandu@gmail.com");
-  await docRef.get().then(
-        (DocumentSnapshot doc) {
-      final data = doc.data() as Map<String, dynamic>;
-      print("Current data: ");
-      print(data);
-    },
-    onError: (e) => print("Error getting document: $e"),
-  );
+
+  final docRef = db.collection("Users").doc(userId);
+
+  try {
+    DocumentSnapshot doc = await docRef.get();
+    print("Getting user");
+    var cur_instance_user= MobileUser.fromDocument(doc);
+    print("Result++:");
+    print(cur_instance_user.Useremail);
+    return cur_instance_user;
+  } catch (e) {
+    print("Error getting user: $e");
+    rethrow;
+  }
+}
+
+Future<List<Park>> getParks() async {
+  final db = FirebaseFirestore.instance;
+  final collectionRef = db.collection("Car_Parks");
+  List<Park> parks = [];
+
+  try {
+    QuerySnapshot querySnapshot = await collectionRef.get();
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      parks.add(Park.fromDocument(doc));
+      print(parks);
+    }
+  } catch (e) {
+    print("Error getting documents: $e");
+  }
+
+
+  return parks;
 }
 
 get_info_about_Car_park() async{//this function should be upgraded as taking parameters of user id of carpark, time that user planning to park and output hhow many of them are occupied
@@ -58,12 +85,8 @@ get_info_about_Car_park() async{//this function should be upgraded as taking par
   print('Final status: ${Park_lot_status}');
 }
 
-void addUser(String Username,DateTime start,DateTime end,String Vehicle_type,String Vehicle_number) async{
+void addevent(String Username,DateTime start,DateTime end,String Vehicle_type,String Vehicle_number) async{
   await get_info_about_Car_park();
-
-
-
-
 
 }
 
