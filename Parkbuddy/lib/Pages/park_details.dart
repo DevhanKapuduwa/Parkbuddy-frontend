@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
@@ -86,43 +87,40 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
       print(widget.current_User.Useremail);
 
 
+      final shop = context.read<Shop>();
+      DateTime parsedDate = DateTime(_selectedDate.year,_selectedDate.month,_selectedDate.day,_selectedTime.hour,_selectedTime.minute);
 
-      // final mobileUser = homepage.user?.email ?? "null user";
-      // final shop = context.read<Shop>();
-      // DateTime sendingDatetime = DateTime.now();
-      // DateTime parsedDate = DateTime(_selectedDate.year,_selectedDate.month,_selectedDate.day,_selectedTime.hour,_selectedTime.minute);
-      //
-      // shop.addToCart(widget.park, quantityCount, parsedDate);
+      shop.addToCart(widget.park, quantityCount, parsedDate,widget.current_User);
 
-      // if (mounted) {
-      //   showDialog(
-      //     context: context,
-      //     barrierDismissible: false,
-      //     builder: (context) => AlertDialog(
-      //       backgroundColor: Colors.orangeAccent,
-      //       content: Text(
-      //         "Successfully added to cart",
-      //         style: TextStyle(
-      //           color: Colors.black,
-      //           fontWeight: FontWeight.bold,
-      //         ),
-      //         textAlign: TextAlign.center,
-      //       ),
-      //       actions: [
-      //         IconButton(
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //             Navigator.pop(context);
-      //           },
-      //           icon: Icon(
-      //             Icons.done,
-      //             color: Colors.black,
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   );
-      // }
+      if (mounted) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Successfully added to cart",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.done,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 

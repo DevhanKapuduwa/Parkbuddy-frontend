@@ -1,8 +1,10 @@
 
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:plz/components/connect_firebase.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:plz/components/user.dart';
 
 
 class Park {
@@ -124,11 +126,40 @@ class Shop extends ChangeNotifier {
 
   Map<String, Map<String, dynamic>> get cart => _cart;
 
-  void addToCart(Park park, int quantity, DateTime parsedDate) {
 
 
 
-    // print("Parks");print(park.id);print("quean");print(quantity);print(parsedDate.toString());
+  Future<void> addToCart(Park park, int quantity, DateTime StartTime,MobileUser Cur_user) async {
+    DateTime EndTime = StartTime.add(Duration(hours: quantity));
+    var cartItem={
+      'start':StartTime.toString(),
+      'end':EndTime.toString(),
+      'Vehicle':"Car",
+      'title':Cur_user.Username,
+      'Vehicle_number':"VAL 1890"
+    };
+
+
+    try {
+      print("Parks");
+      print(park.id);
+      print("quean");
+      print(quantity);
+      print(StartTime.toString());
+      final url =
+          'https://9b15d0kz-8000.asse.devtunnels.ms/'; // Replace with your actual URL
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(cartItem),
+      );
+      print("New response::${response.body}");
+    } catch (e){
+      print('An error occurred: $e');
+    }
+
     notifyListeners();
   }
 
