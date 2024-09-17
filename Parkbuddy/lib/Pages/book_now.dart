@@ -177,11 +177,41 @@ class _BookNowPageState extends State<BookNowPage> {
               height: 15,
             ),
             Expanded(
-              child: ListView.builder(
+            child: _searchController.text.isNotEmpty
+            ? _searchResults.isNotEmpty
+            ?
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: _searchResults.length,
+              itemBuilder: (context, index) {
+                final park = _searchResults[index];
+                return ParkTile(
+                  park: park,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ParkDetailsPage(
+                          park: park,
+                          current_User: widget.current_User,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            )
+                :const Center(
+              child: Text(
+                'No results found',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              ) :
+            ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: _searchResults.length,
+                itemCount: displayedParks.length,
                 itemBuilder: (context, index) {
-                  final park = _searchResults[index];
+                  final park = displayedParks[index];
                   return ParkTile(
                     park: park,
                     onTap: () {
