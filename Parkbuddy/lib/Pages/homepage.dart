@@ -33,7 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var current_User;
+  var current_User=MobileUser(Username: "Default", Useremail: "Defaultmail", Ownedvehicles: []);
 
 
   void userlogout() {
@@ -43,8 +43,10 @@ class _HomePageState extends State<HomePage> {
   getcuruser() async {
     var cur_user=await getUser(widget.user?.email??"");
 
-    current_User=cur_user;
-    print("Current user:${cur_user.Useremail}");
+
+    setState(() {
+      current_User=cur_user;
+    });
 
 
 
@@ -54,12 +56,13 @@ class _HomePageState extends State<HomePage> {
   List<Park> displayedParks = [];
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
     // Initialize the displayedParks list here
     final shop = context.read<Shop>();
     displayedParks = shop.bookNowParks;
     getcuruser();
+    print("Now User: $current_User");
   }
 
   @override

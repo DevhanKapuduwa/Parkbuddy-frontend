@@ -27,8 +27,10 @@ class _MapPageState extends State<MapPage> {
 
   Map<PolylineId, Polyline> polylines = {};
 
+
   @override
   void initState() {
+
     super.initState();
     getLocationUpdates().then(
       (_) => {
@@ -39,12 +41,17 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _currentP == null
           ? const Center(
-              child: Text("Loading..."),
+              child: Text("Loading...",
+              style: TextStyle(
+                color: Colors.amber
+              ),),
             )
           : GoogleMap(
               onMapCreated: ((GoogleMapController controller) =>
