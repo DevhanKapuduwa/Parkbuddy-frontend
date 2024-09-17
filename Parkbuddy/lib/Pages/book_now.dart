@@ -220,11 +220,10 @@ class _BookNowPageState extends State<BookNowPage> {
                         MaterialPageRoute(
                           builder: (context) => ParkDetailsPage(park: park,current_User: widget.current_User),
                         ),
+
                       );
-                    },
-                  );
-                },
-              ),
+                    });}
+    )
             ),
           ],
         ],
