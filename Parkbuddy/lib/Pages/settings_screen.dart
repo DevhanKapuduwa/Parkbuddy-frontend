@@ -17,13 +17,14 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  var currentuser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Profile())),
+              context, MaterialPageRoute(builder: (context) => Profile(Current_User: currentuser,))),
           icon: Icon(LineAwesomeIcons.angle_left_solid),
         ),
         title: Text(
@@ -53,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile())),
+                    MaterialPageRoute(builder: (context) => Profile(Current_User: currentuser,))),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -66,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AvatarCard(),
+               AvatarCard(CurrentUser:currentuser,),
               const SizedBox(height: 20),
               const Divider(),
               const SizedBox(height: 10),

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/utils.dart';
+import 'package:plz/components/connect_firebase.dart';
+import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
 import 'homepage.dart';
@@ -12,7 +14,8 @@ import 'profile.dart';
 import 'profile_image_provider.dart';
 
 class UpdateProfile extends StatefulWidget {
-  const UpdateProfile({super.key});
+  final MobileUser currentuser;
+  const UpdateProfile({super.key,required this.currentuser});
 
   @override
   _UpdateProfileState createState() => _UpdateProfileState();
@@ -34,7 +37,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Profile())),
+              context, MaterialPageRoute(builder: (context) => Profile(Current_User: this.widget.currentuser))),
           icon: Icon(LineAwesomeIcons.angle_left_solid),
         ),
         centerTitle: true,
@@ -64,7 +67,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile())),
+                    MaterialPageRoute(builder: (context) => Profile(Current_User: this.widget.currentuser,))),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -177,7 +180,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UpdateProfile())),
+                                  builder: (context) => UpdateProfile(currentuser: this.widget.currentuser))),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orange,
                               side: BorderSide.none,

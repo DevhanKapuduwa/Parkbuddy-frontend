@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,6 +34,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var current_User;
+
 
   void userlogout() {
     FirebaseAuth.instance.signOut();
@@ -100,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 color: Colors.orange,
               ),
-              child: AvatarCard(),
+              child: AvatarCard(CurrentUser: current_User,),
             ),
             ListTile(
               leading: Icon(Icons.home),
@@ -116,7 +119,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Profile())),
+                  context, MaterialPageRoute(builder: (context) => Profile(Current_User:current_User))),
             ),
             Divider(
               height: 3,
@@ -126,7 +129,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.edit_document),
               title: Text('Edit profile'),
               onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UpdateProfile())),
+                  MaterialPageRoute(builder: (context) => UpdateProfile(currentuser: current_User,))),
             ),
             Divider(
               height: 3,
@@ -218,7 +221,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile())),
+                    MaterialPageRoute(builder: (context) => Profile(Current_User: current_User))),
                 child: Icon(Icons.person)),
             label: '',
           ),

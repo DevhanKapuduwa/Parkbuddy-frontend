@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
 import '../Pages/profile_image_provider.dart';
 import 'contants_set.dart';
 
 class AvatarCard extends StatelessWidget {
-  const AvatarCard({super.key});
+  final MobileUser CurrentUser;
+  const AvatarCard({super.key,required this.CurrentUser});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,8 @@ class AvatarCard extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        const Text(
-          "Michael John",
+         Text(
+          CurrentUser.Username,
           style: TextStyle(
             fontSize: kbigFontSize,
             fontWeight: FontWeight.bold,

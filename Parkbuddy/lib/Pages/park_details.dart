@@ -158,7 +158,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile())),
+                    MaterialPageRoute(builder: (context) => Profile(Current_User: this.widget.current_User,))),
                 child: Icon(Icons.person)),
             label: '',
           ),

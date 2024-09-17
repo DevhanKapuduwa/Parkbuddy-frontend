@@ -21,6 +21,7 @@ class BookNowPage extends StatefulWidget {
 }
 
 class _BookNowPageState extends State<BookNowPage> {
+  var currentUser;
   bool firstSwitchValue = false;
   List<Park> displayedParks = [];
   TextEditingController _searchController = TextEditingController();
@@ -96,7 +97,7 @@ class _BookNowPageState extends State<BookNowPage> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile())),
+                    MaterialPageRoute(builder: (context) => Profile(Current_User: currentUser))),
                 child: Icon(Icons.person)),
             label: '',
           ),

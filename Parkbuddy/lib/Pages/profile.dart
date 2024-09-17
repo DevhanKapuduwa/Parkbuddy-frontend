@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
 import 'homepage.dart';
@@ -10,7 +11,10 @@ import 'settings_screen.dart';
 import 'update_profile.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+
+  final MobileUser Current_User;
+
+  const Profile({super.key,required this.Current_User});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class Profile extends StatelessWidget {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile())),
+                    MaterialPageRoute(builder: (context) => Profile(Current_User: this.Current_User,))),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -90,7 +94,7 @@ class Profile extends StatelessWidget {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => UpdateProfile())),
+                              builder: (context) => UpdateProfile(currentuser: this.Current_User,))),
                       child: Container(
                         width: 35,
                         height: 35,
@@ -106,10 +110,10 @@ class Profile extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              Text('Michael John',
+              Text(this.Current_User.Username,
                   style: Theme.of(context).textTheme.headlineSmall),
               Text(
-                'Michael.john@gmail.com',
+                this.Current_User.Useremail,
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall
@@ -122,7 +126,7 @@ class Profile extends StatelessWidget {
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => UpdateProfile())),
+                            builder: (context) => UpdateProfile(currentuser: this.Current_User,))),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
                         side: BorderSide.none,
