@@ -7,6 +7,7 @@ import 'package:plz/Pages/shop.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
+import '../components/connect_firebase.dart';
 import '../components/park_tile.dart';
 import 'homepage.dart';
 import 'notifications.dart';
@@ -22,6 +23,8 @@ class BookNowPage extends StatefulWidget {
 class _BookNowPageState extends State<BookNowPage> {
   bool firstSwitchValue = false;
   List<Park> displayedParks = [];
+  TextEditingController _searchController = TextEditingController();
+  List<Park> _searchResults = [];
 
   @override
   void initState() {
@@ -33,6 +36,15 @@ class _BookNowPageState extends State<BookNowPage> {
     // print(getparks());
     _initializeDisplayedParks();
   }
+
+  Future<void> _searchParks(String searchQuery) async {
+    List<Park> parks = await SearchPark(searchQuery);
+    print("Searching..");
+    setState(() {
+      _searchResults = parks;
+    });
+  }
+
   Future<void> _initializeDisplayedParks() async {
     // Get the parks data from the database
     List<Park> parks = await getparks();
@@ -41,6 +53,8 @@ class _BookNowPageState extends State<BookNowPage> {
       displayedParks = parks;
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +156,7 @@ class _BookNowPageState extends State<BookNowPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
+                controller: _searchController,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
                   hintText: 'Search your desired car park....',
@@ -152,6 +167,10 @@ class _BookNowPageState extends State<BookNowPage> {
                     borderSide: BorderSide(color: Colors.grey.shade600),
                   ),
                 ),
+                onChanged: (value)
+                {
+                  _searchParks(value);
+                },
               ),
             ),
             SizedBox(
@@ -160,9 +179,9 @@ class _BookNowPageState extends State<BookNowPage> {
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: displayedParks.length,
+                itemCount: _searchResults.length,
                 itemBuilder: (context, index) {
-                  final park = displayedParks[index];
+                  final park = _searchResults[index];
                   return ParkTile(
                     park: park,
                     onTap: () {

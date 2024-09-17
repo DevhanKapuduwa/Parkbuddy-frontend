@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     var cur_user=await getUser(widget.user?.email??"");
 
     current_User=cur_user;
+    print("Current user:${cur_user.Useremail}");
 
 
 
@@ -60,6 +61,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.user==null){
+      userlogout();
+    }
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(

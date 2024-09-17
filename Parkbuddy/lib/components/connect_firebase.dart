@@ -43,6 +43,35 @@ Future<List<Park>> getParks() async {
   return parks;
 }
 
+Future<List<Park>> SearchPark(String searchQuery) async {
+    print("Searching for $searchQuery");
+    final db = FirebaseFirestore.instance;
+    final collectionRef = db.collection("Car_Parks");
+    List<Park> parks = [];
+
+    try {
+      // Fetch all car park documents
+      QuerySnapshot querySnapshot = await collectionRef.get();
+
+      // Convert the user input to lowercase for case-insensitive comparison
+      String lowercaseQuery = searchQuery.toLowerCase();
+
+      // Loop through the documents and compare the car park names in lowercase
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        String carParkName = doc['Car_park_name'].toString().toLowerCase();
+        if (carParkName.contains(lowercaseQuery)) {
+          parks.add(Park.fromDocument(doc));
+        }
+      }
+    } catch (e) {
+      print("Error getting documents: $e");
+    }
+
+    return parks;
+
+}
+
+
 get_info_about_Car_park() async{//this function should be upgraded as taking parameters of user id of carpark, time that user planning to park and output hhow many of them are occupied
   final db = FirebaseFirestore.instance;
   await db.collection("Car_Parks").doc("bandu@gmail.com").collection("UserLots").get().then(
