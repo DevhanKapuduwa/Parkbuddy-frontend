@@ -1,10 +1,7 @@
-
-
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plz/Pages/add_vehicle.dart';
 import 'package:plz/Pages/authrization.dart';
 import 'package:plz/Pages/bookings.dart';
 import 'package:plz/Pages/cart_page.dart';
@@ -14,7 +11,6 @@ import 'package:plz/Pages/ordinalbot.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
-import 'package:plz/Pages/signin.dart';
 import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
@@ -33,30 +29,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var current_User=MobileUser(Username: "Default", Useremail: "Defaultmail", Ownedvehicles: []);
-
+  var current_User = MobileUser(
+      Username: "Default", Useremail: "Defaultmail", Ownedvehicles: []);
 
   void userlogout() {
     FirebaseAuth.instance.signOut();
   }
 
   getcuruser() async {
-    var cur_user=await getUser(widget.user?.email??"");
-
+    var cur_user = await getUser(widget.user?.email ?? "");
 
     setState(() {
-      current_User=cur_user;
+      current_User = cur_user;
     });
-
-
-
   }
 
   // Currently displayed parks
   List<Park> displayedParks = [];
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     // Initialize the displayedParks list here
     final shop = context.read<Shop>();
@@ -67,7 +59,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.user==null){
+    if (widget.user == null) {
       userlogout();
     }
     return Scaffold(
@@ -106,7 +98,9 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 color: Colors.orange,
               ),
-              child: AvatarCard(CurrentUser: current_User,),
+              child: AvatarCard(
+                CurrentUser: current_User,
+              ),
             ),
             ListTile(
               leading: Icon(Icons.home),
@@ -122,7 +116,10 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Profile(Current_User:current_User))),
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Profile(Current_User: current_User))),
             ),
             Divider(
               height: 3,
@@ -131,8 +128,12 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.edit_document),
               title: Text('Edit profile'),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UpdateProfile(currentuser: current_User,))),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UpdateProfile(
+                            currentuser: current_User,
+                          ))),
             ),
             Divider(
               height: 3,
@@ -141,10 +142,12 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.car_rental),
               title: Text('Add a Vehicle'),
-              onTap: () {
-                Navigator.of(context).pop(); // Close the drawer
-                Navigator.of(context).pushNamed('/page2');
-              },
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddVehicle(
+                            currentuser: current_User,
+                          ))),
             ),
             Divider(
               height: 3,
@@ -195,13 +198,15 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey.shade800,
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Sign Out'),
-                onTap: ()=>{
-                userlogout(),
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Pagedecider()))
-                }
-            ),
+                leading: Icon(Icons.logout),
+                title: Text('Sign Out'),
+                onTap: () => {
+                      userlogout(),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Pagedecider()))
+                    }),
           ],
         ),
       ),
@@ -223,8 +228,11 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile(Current_User: current_User))),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Profile(Current_User: current_User))),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -256,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                   borderSide: BorderSide(color: Colors.grey.shade600),
                 ),
               ),
-              onChanged: (e) => getcuruser(),//change this later
+              onChanged: (e) => getcuruser(), //change this later
             ),
           ),
           SizedBox(height: 25),
@@ -274,7 +282,9 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BookNowPage(current_User: current_User)),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BookNowPage(current_User: current_User)),
                     );
                   },
                   child: Container(
@@ -386,7 +396,10 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ParkDetailsPage(park: park,current_User: current_User,),
+                        builder: (context) => ParkDetailsPage(
+                          park: park,
+                          current_User: current_User,
+                        ),
                       ),
                     );
                   },
