@@ -101,7 +101,8 @@ class Shop extends ChangeNotifier {
       'end':EndTime.toString(),
       'Vehicle':"Car",
       'title':Cur_user.Username,
-      'Vehicle_number':"VAL 1890"
+      'Vehicle_number':"VAL 1890",
+      'Car_park':park.id
     };
 
 
@@ -112,13 +113,14 @@ class Shop extends ChangeNotifier {
       print(quantity);
       print(StartTime.toString());
       final url =
-          'https://9b15d0kz-8000.asse.devtunnels.ms/'; // Replace with your actual URL
+          'https://tm659tws-8000.asse.devtunnels.ms/'; // Replace with your actual URL
       final response = await http.post(
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
         },
         body: json.encode(cartItem),
+
       );
       print("New response::${response.body}");
     } catch (e){

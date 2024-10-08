@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:plz/Pages/authrization.dart';
 import 'package:plz/Pages/bookings.dart';
 import 'package:plz/Pages/cart_page.dart';
@@ -16,12 +17,12 @@ import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/signin.dart';
 import 'package:plz/Pages/update_profile.dart';
+import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
-
 import 'book_now.dart';
 
 class HomePage extends StatefulWidget {
@@ -320,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BookingsPage()),
+                      MaterialPageRoute(builder: (context) => CarParkMap()),
                     );
                   },
                   child: Container(
