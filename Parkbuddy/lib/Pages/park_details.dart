@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
-import 'custom_dropdown.dart';
 import 'homepage.dart';
 import 'notifications.dart';
 import 'profile.dart';
@@ -20,14 +18,11 @@ class ParkDetailsPage extends StatefulWidget {
 }
 
 class _ParkDetailsPageState extends State<ParkDetailsPage> {
-
   var _selectedTime = TimeOfDay.now();
 
   var _selectedDate = DateTime.now();
 
-
-
-  void selecttime(){
+  void selecttime() {
     Future<void> _selectTime(BuildContext context) async {
       var picked = await showTimePicker(
         context: context,
@@ -39,9 +34,11 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
         });
       }
     }
+
     _selectTime(context);
   }
-  void selectDate(){
+
+  void selectDate() {
     Future<void> _selectdate(BuildContext context) async {
       var picked = await showDatePicker(
         context: context,
@@ -55,10 +52,9 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
         });
       }
     }
+
     _selectdate(context);
   }
-
-
 
   int quantityCount = 0;
   String dropdownValue = "00 : 00 A.M.";
@@ -80,48 +76,191 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
   void addToCart() {
     if (quantityCount > 0) {
       // final homepage=context.read<HomePage>();
-      Park current_park=widget.park;
+      Park current_park = widget.park;
       print("Park ID:");
       print(current_park.id);
       print("User id:");
       print(widget.current_User.Useremail);
 
-
       final shop = context.read<Shop>();
-      DateTime parsedDate = DateTime(_selectedDate.year,_selectedDate.month,_selectedDate.day,_selectedTime.hour,_selectedTime.minute);
+      DateTime parsedDate = DateTime(_selectedDate.year, _selectedDate.month,
+          _selectedDate.day, _selectedTime.hour, _selectedTime.minute);
 
-      shop.addToCart(widget.park, quantityCount, parsedDate,widget.current_User);
+      shop.addToCart(
+          widget.park, quantityCount, parsedDate, widget.current_User);
 
       if (mounted) {
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (context) => AlertDialog(
-            backgroundColor: Colors.orangeAccent,
-            content: Text(
-              "Successfully added to cart",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.done,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
+          builder: (context) {
+            // Define the selected vehicle as a variable outside the StatefulBuilder so that it can be updated and passed to other widgets
+            String selectedVehicle = "Car"; // Default selected vehicle
+
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  backgroundColor: Colors.orangeAccent,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Select your vehicle:",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 15),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: [
+                          _buildVehicleTile(
+                            setState,
+                            selectedVehicle,
+                            "Car",
+                            Icons.directions_car,
+                            (vehicleType) => selectedVehicle =
+                                vehicleType, // Update the selected vehicle
+                          ),
+                          _buildVehicleTile(
+                            setState,
+                            selectedVehicle,
+                            "Van",
+                            Icons.airport_shuttle,
+                            (vehicleType) => selectedVehicle = vehicleType,
+                          ),
+                          _buildVehicleTile(
+                            setState,
+                            selectedVehicle,
+                            "Motorbike",
+                            Icons.motorcycle,
+                            (vehicleType) => selectedVehicle = vehicleType,
+                          ),
+                          _buildVehicleTile(
+                            setState,
+                            selectedVehicle,
+                            "Bus",
+                            Icons.directions_bus,
+                            (vehicleType) => selectedVehicle = vehicleType,
+                          ),
+                          _buildVehicleTile(
+                            setState,
+                            selectedVehicle,
+                            "Jeep",
+                            Icons.directions_ferry_outlined,
+                            (vehicleType) => selectedVehicle = vehicleType,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(
+                            context); // Close the dialog without adding
+                      },
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context); // Close the dialog
+                        showConfirmationDialog(
+                            selectedVehicle); // Pass the selected vehicle to the confirmation dialog
+                      },
+                      child: Text(
+                        "Confirm",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         );
       }
     }
+  }
+
+  Widget _buildVehicleTile(
+    StateSetter setState,
+    String selectedVehicle,
+    String vehicleType,
+    IconData icon,
+    Function(String)
+        onVehicleSelected, // Add callback to update the selected vehicle
+  ) {
+    bool isSelected = selectedVehicle == vehicleType;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          onVehicleSelected(
+              vehicleType); // Update the selected vehicle via callback
+        });
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.orange : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,
+                size: 40, color: isSelected ? Colors.white : Colors.black),
+            const SizedBox(height: 5),
+            Text(
+              vehicleType,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void showConfirmationDialog(String vehicle) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.orangeAccent,
+        content: Text(
+          "Successfully added to cart for your $vehicle",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context); // Close both dialogs and go back
+            },
+            icon: Icon(
+              Icons.done,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -157,8 +296,12 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Profile(Current_User: this.widget.current_User,))),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Profile(
+                              Current_User: this.widget.current_User,
+                            ))),
                 child: Icon(Icons.person)),
             label: '',
           ),
@@ -198,7 +341,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                     child: Text(
                       widget.park.extension,
                       style:
-                      TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(height: 5),
@@ -214,7 +357,9 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                   ),
                   SizedBox(height: 10),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25,vertical: 10), // Adjust the height as needed
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 25,
+                        vertical: 10), // Adjust the height as needed
                     child: Scrollbar(
                       thumbVisibility: true,
                       child: SingleChildScrollView(
@@ -231,7 +376,13 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
             ),
           ),
           Container(
-            color: Colors.orange,
+            decoration: BoxDecoration(
+              color: Colors.orange.shade500,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
             padding: EdgeInsets.only(top: 15, bottom: 25, left: 25, right: 25),
             child: Column(
               children: [
@@ -246,25 +397,16 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                         fontSize: 18,
                       ),
                     ),
-
                     ElevatedButton(
-                        onPressed: selectDate ,
+                        onPressed: selectDate,
                         child: Text(
                           "${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}",
-
                           style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
-                          ),
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black45,
-                            padding: EdgeInsets.symmetric(horizontal: 40)
-
-
-                        )
-
-                    ),
+                            backgroundColor: Colors.black.withOpacity(0.02),
+                            padding: EdgeInsets.symmetric(horizontal: 48))),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -279,24 +421,16 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                         fontSize: 18,
                       ),
                     ),
-
                     ElevatedButton(
-                        onPressed: selecttime ,
+                        onPressed: selecttime,
                         child: Text(
                           _selectedTime.format(context),
                           style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
-                          ),
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black45,
-                            padding: EdgeInsets.symmetric(horizontal: 40)
-
-
-                        )
-
-                    ),
+                            backgroundColor: Colors.black.withOpacity(0.02),
+                            padding: EdgeInsets.symmetric(horizontal: 57))),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -304,7 +438,7 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Rs. " + widget.park.price + " / hr",
+                      "Rs. " + widget.park.price + " / hr            :",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -350,19 +484,19 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: 25),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                          "Checkout Time : ",
+                      const Text("Total pay                : ",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                          )
-                      ),]
+                          )),
+                    ]),
+                SizedBox(
+                  height: 10,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

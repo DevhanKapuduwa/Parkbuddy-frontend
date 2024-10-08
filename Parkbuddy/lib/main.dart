@@ -1,10 +1,8 @@
-import 'dart:ui';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:plz/Pages/car_image_provider.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/welcome.dart';
-import 'package:plz/components/UserProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'Pages/profile_image_provider.dart';
@@ -20,7 +18,10 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Shop()),
-        ChangeNotifierProvider(create: (context) => ProfileImageProvider()),// Add the ProfileImageProvider
+        ChangeNotifierProvider(
+            create: (context) =>
+                ProfileImageProvider()), // Add the ProfileImageProvider
+        ChangeNotifierProvider(create: (context) => CarImageProvider()),
       ],
       child: MyApp(),
     ),
