@@ -95,9 +95,7 @@ Future<List<Object?>> getNearbyCarParks(double? userLat, double? userLon, double
 }
 
 class CarParkMap extends StatefulWidget {
-  
-
-  CarParkMap();
+  CarParkMap({super.key});
 
   @override
   _CarParkMapState createState() => _CarParkMapState();
@@ -168,16 +166,12 @@ class _CarParkMapState extends State<CarParkMap> {
 
   @override
   Widget build(BuildContext context) {
-    print("**");print(_markers);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Car Parks Nearby"),
-      ),
-      body: GoogleMap(
+    return Container(child:GoogleMap(
         initialCameraPosition: CameraPosition(
           target: LatLng(Currentlocation?.latitude??0,Currentlocation?.longitude??0),
           zoom: 7,
         ),
+        myLocationEnabled: true,
         markers: _markers,
 
         onMapCreated: (GoogleMapController controller) {
@@ -187,7 +181,9 @@ class _CarParkMapState extends State<CarParkMap> {
           }
         },
       ),
-    );
+        height: 300,
+
+      );
   }
 }
 

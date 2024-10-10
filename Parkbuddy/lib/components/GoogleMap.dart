@@ -77,24 +77,25 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
         : Container(
       height: 300, // You can adjust the height and width as needed
       width: double.infinity,
-      child: GoogleMap(
-        onMapCreated: (GoogleMapController controller) {
-          _mapController.complete(controller);
-        },
-        initialCameraPosition: CameraPosition(
-          target: _currentLocation!,
-          zoom: 14,
-        ),
-        markers: {
-          Marker(
-            markerId: MarkerId("currentLocation"),
-            position: _currentLocation!,
-            icon: BitmapDescriptor.defaultMarker,
+
+        child: GoogleMap(
+          onMapCreated: (GoogleMapController controller) {
+            _mapController.complete(controller);
+          },
+          initialCameraPosition: CameraPosition(
+            target: _currentLocation!,
+            zoom: 14,
           ),
-        },
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-      ),
+          markers: {
+            Marker(
+              markerId: MarkerId("currentLocation"),
+              position: _currentLocation!,
+              icon: BitmapDescriptor.defaultMarker,
+            ),
+          },
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+        ),
     );
   }
 }

@@ -6,6 +6,8 @@ import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/components/GoogleMap.dart';
+import 'package:plz/components/Google_place_autocomplete.dart';
+import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,8 @@ class _BookNowPageState extends State<BookNowPage> {
   bool firstSwitchValue = false;
   List<Park> displayedParks = [];
   TextEditingController _searchController = TextEditingController();
-  List<Park> _searchResults = [];
+  List<Park> _Park_searchResults = [];
+  List<dynamic> _Map_searchResults=[];
 
   @override
   void initState() {
@@ -41,10 +44,22 @@ class _BookNowPageState extends State<BookNowPage> {
   }
 
   Future<void> _searchParks(String searchQuery) async {
-    List<Park> parks = await SearchPark(searchQuery);
+    List<Park> parks=[];
+    List<dynamic> _places=[];
+    try{
+      parks = await SearchPark(searchQuery);
+      _places =await placesuggestion(searchQuery);
+    }
+    catch(e){
+      print("e#");
+      print(e.toString());
+
+    }
+
     print("Searching..");
     setState(() {
-      _searchResults = parks;
+      _Park_searchResults = parks;
+      _Map_searchResults=_places;
     });
   }
 
@@ -70,7 +85,7 @@ class _BookNowPageState extends State<BookNowPage> {
         ),
         centerTitle: true,
         title: Text(
-          'Book Now',
+          'Book Now2',
           style: TextStyle(
             fontSize: Theme.of(context)
                 .textTheme
@@ -180,38 +195,63 @@ class _BookNowPageState extends State<BookNowPage> {
               height: 15,
             ),
             Expanded(
-            child: _searchController.text.isNotEmpty
-            ? _searchResults.isNotEmpty
-            ?
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: _searchResults.length,
-              itemBuilder: (context, index) {
-                final park = _searchResults[index];
-                return ParkTile(
-                  park: park,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ParkDetailsPage(
-                          park: park,
-                          current_User: widget.current_User,
-                        ),
+              child: _searchController.text.isNotEmpty
+                  ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // Map search results
+                    if (_Map_searchResults.isNotEmpty)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 3, // Adjust count as needed
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            child: ListTile(
+                              title: Text(_Map_searchResults[index]["description"]),
+                            ),
+                          );
+                        },
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("No places found"),
                       ),
-                    );
-                  },
-                );
-              },
-            )
-                :const Center(
-              child: Text(
-                'No results found',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              ) :
-            ListView.builder(
-                scrollDirection: Axis.vertical,
+
+                    // Park search results
+                    if (_Park_searchResults.isNotEmpty)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: _Park_searchResults.length,
+                        itemBuilder: (context, index) {
+                          final park = _Park_searchResults[index];
+                          return ParkTile(
+                            park: park,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ParkDetailsPage(
+                                    park: park,
+                                    current_User: widget.current_User,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("No car parks found"),
+                      ),
+                  ],
+                ),
+              )
+                  : ListView.builder(
                 itemCount: displayedParks.length,
                 itemBuilder: (context, index) {
                   final park = displayedParks[index];
@@ -221,16 +261,26 @@ class _BookNowPageState extends State<BookNowPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ParkDetailsPage(park: park,current_User: widget.current_User),
+                          builder: (context) =>
+                              ParkDetailsPage(park: park, current_User: widget.current_User),
                         ),
-
                       );
-                    });}
-    )
+                    },
+                  );
+                },
+              ),
             ),
+
+
           ]
+
+
           else ...[
-            GoogleMapWidget(),
+            Container(
+              child: CarParkMap(),
+              height: 500,
+
+            ),
           ],
         ],
       ),

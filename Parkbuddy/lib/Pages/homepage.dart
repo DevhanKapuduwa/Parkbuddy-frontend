@@ -13,13 +13,14 @@ import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/update_profile.dart';
+import 'package:plz/components/Google_place_autocomplete.dart';
 import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
-import 'book_now.dart';
+import 'book_now2.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -30,6 +31,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController Searchbar_controller=TextEditingController();
+  var suggest_palces;
   var current_User = MobileUser(
       Username: "Default", Useremail: "Defaultmail", Ownedvehicles: []);
 
@@ -38,11 +41,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   getcuruser() async {
-    var cur_user = await getUser(widget.user?.email ?? "");
+    var input= Searchbar_controller.text;
+    try{
+      suggest_palces= await placesuggestion(input);
+      print("&*1");
+      print(suggest_palces);
 
-    setState(() {
-      current_User = cur_user;
-    });
+    }
+    catch(e){
+      print("&*2");
+      print(e);
+    }
+
+
+
+
   }
 
   // Currently displayed parks
@@ -255,6 +268,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
+              controller:Searchbar_controller,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search your desired car park....',
@@ -331,7 +345,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CarParkMap()),
+                      MaterialPageRoute(builder: (context) => CarParkMap()),//car park map is a temporary
                     );
                   },
                   child: Container(
