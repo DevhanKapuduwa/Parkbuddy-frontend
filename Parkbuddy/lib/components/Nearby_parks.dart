@@ -95,7 +95,8 @@ Future<List<Object?>> getNearbyCarParks(double? userLat, double? userLon, double
 }
 
 class CarParkMap extends StatefulWidget {
-  CarParkMap({super.key});
+  LatLng? Input_location=null;
+  CarParkMap({super.key,this.Input_location});
 
   @override
   _CarParkMapState createState() => _CarParkMapState();
@@ -116,8 +117,27 @@ class _CarParkMapState extends State<CarParkMap> {
 
   Future<void> _loadNearbyCarParks() async {
     // Await the result of getNearbyCarParks
-    LocationService newlocation=LocationService();
-    Currentlocation=await newlocation.getCurrentLocation();
+    print("^^");
+    if(widget.Input_location==null){
+      print("Null find");
+      LocationService newlocation=LocationService();
+      Currentlocation=await newlocation.getCurrentLocation();
+
+    }else{
+      print("Not null");
+
+      try{
+        Currentlocation= Position(longitude: widget.Input_location?.longitude??0, latitude: widget.Input_location?.latitude??0, timestamp: DateTime.now(), accuracy: 0, altitude: 0, altitudeAccuracy: 0, heading: 0, headingAccuracy: 0, speed: 0, speedAccuracy: 0);
+      }
+      catch(e){
+        print("^^%"+e.toString());
+      }
+
+      print("iii");
+      print(widget.Input_location.toString());
+
+    }
+
     print("&&");
     print(Currentlocation?.longitude);
     List<Object?> nearbyCarParks = await getNearbyCarParks(Currentlocation?.latitude, Currentlocation?.longitude, 4);
@@ -181,7 +201,8 @@ class _CarParkMapState extends State<CarParkMap> {
           }
         },
       ),
-        height: 300,
+        height: double.infinity
+      ,
 
       );
   }

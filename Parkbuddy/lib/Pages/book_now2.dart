@@ -1,5 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/map_page.dart';
 import 'package:plz/Pages/park_details.dart';
@@ -43,12 +44,16 @@ class _BookNowPageState extends State<BookNowPage> {
     _initializeDisplayedParks();
   }
 
+
   Future<void> _searchParks(String searchQuery) async {
     List<Park> parks=[];
     List<dynamic> _places=[];
     try{
       parks = await SearchPark(searchQuery);
       _places =await placesuggestion(searchQuery);
+      print("Searching..");
+
+      print(_places[0]["geocode"]);
     }
     catch(e){
       print("e#");
@@ -56,10 +61,11 @@ class _BookNowPageState extends State<BookNowPage> {
 
     }
 
-    print("Searching..");
+
+
     setState(() {
       _Park_searchResults = parks;
-      _Map_searchResults=_places;
+      _Map_searchResults= _places;
     });
   }
 
@@ -70,6 +76,30 @@ class _BookNowPageState extends State<BookNowPage> {
     setState(() {
       displayedParks = parks;
     });
+  }
+
+  void _CityClicked(var Place_id,BuildContext context) async{
+    print("!Fetching ::"+Place_id.toString());
+    LatLng? Coordinates=await getCoordinatesFromPlaceId(Place_id);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: Text("Places"),),
+          body: CarParkMap(Input_location: Coordinates),
+        ),
+      ),
+    );
+
+
+    if(Coordinates==null){
+      print("Error Fetching");
+
+    }
+    else{
+      print("@@:"+Coordinates.toString());
+    }
   }
 
 
@@ -177,7 +207,7 @@ class _BookNowPageState extends State<BookNowPage> {
                 controller: _searchController,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search),
-                  hintText: 'Search your desired car park....',
+                  hintText: 'Search Carpark or City ..',
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade600),
                   ),
@@ -207,9 +237,15 @@ class _BookNowPageState extends State<BookNowPage> {
                         itemCount: 3, // Adjust count as needed
                         itemBuilder: (context, index) {
                           return GestureDetector(
+
                             child: ListTile(
                               title: Text(_Map_searchResults[index]["description"]),
                             ),
+                            onTap:()=> {
+                                    _CityClicked(
+                                        _Map_searchResults[index]["place_id"],context)
+                                  },
+
                           );
                         },
                       )
