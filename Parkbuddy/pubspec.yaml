@@ -58,6 +58,7 @@ dependencies:
   another_dashed_container: ^1.0.0
   http: ^1.2.2
   geolocator: ^13.0.1
+  firebase_storage: ^12.3.3
 
 dev_dependencies:
   flutter_test:
