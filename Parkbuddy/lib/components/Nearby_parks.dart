@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
@@ -88,9 +89,6 @@ Future<List<Object?>> getNearbyCarParks(double? userLat, double? userLon, double
       nearbyCarParks.add(doc.data());
     }
   }
-  print("@@nearby:");
-  print(nearbyCarParks);
-
   return nearbyCarParks;
 }
 
@@ -107,6 +105,7 @@ class _CarParkMapState extends State<CarParkMap> {
   var carParks;
   late GoogleMapController _controller;
   Set<Marker> _markers = {};
+  final custom_info_window_controller=CustomInfoWindowController();
 
   @override
   void initState() {
@@ -140,7 +139,7 @@ class _CarParkMapState extends State<CarParkMap> {
 
     print("&&");
     print(Currentlocation?.longitude);
-    List<Object?> nearbyCarParks = await getNearbyCarParks(Currentlocation?.latitude, Currentlocation?.longitude, 4);
+    List<Object?> nearbyCarParks = await getNearbyCarParks(Currentlocation?.latitude, Currentlocation?.longitude, 15);
 
 
     setState(() {
@@ -168,25 +167,29 @@ class _CarParkMapState extends State<CarParkMap> {
   }
 
   void _loadMarkers() {
+    _markers.clear(); // Clear previous markers to avoid duplication
 
     carParks.forEach((carPark) {
-      print("!!");print(carPark['location'].latitude);
       GeoPoint point = carPark['location'];
-      print(point.latitude);
+      LatLng position = LatLng(point.latitude, point.longitude);
+
       _markers.add(
         Marker(
-          markerId: MarkerId("32312323"),
-          position: LatLng(point.latitude, point.longitude),
-          infoWindow: InfoWindow(
-              title: carPark["Car_park_name"]), // Use your car park data here
+          markerId: MarkerId(carPark['Car_park_id'].toString()), // Use a unique marker ID
+          position: position,
+          onTap: () {
+            custom_info_window_controller.addInfoWindow!(
+              Info_window(carPark: carPark),
+              position, // Position of the marker where the info window should appear
+            );
+          },
         ),
       );
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    return Container(child:GoogleMap(
+    return Container(child:Stack(children: [ GoogleMap(
         initialCameraPosition: CameraPosition(
           target: LatLng(Currentlocation?.latitude??0,Currentlocation?.longitude??0),
           zoom: 7,
@@ -196,15 +199,53 @@ class _CarParkMapState extends State<CarParkMap> {
 
         onMapCreated: (GoogleMapController controller) {
           _controller = controller;
+          custom_info_window_controller.googleMapController=controller;
           if(Currentlocation!=null){
             _moveCameraToCurrentLocation();
           }
+
         },
-      ),
+        onTap: (location){
+          custom_info_window_controller.hideInfoWindow!();
+        },
+      onCameraMove: (position){
+          custom_info_window_controller.onCameraMove!();
+      },
+
+      )
+      ,
+      CustomInfoWindow(controller: custom_info_window_controller,height: 200,width: 300,offset: 50,)
+    ]
+    ),
         height: double.infinity
       ,
 
       );
+  }
+}
+
+class Info_window extends StatelessWidget {
+  final Map<String, dynamic> carPark;
+  const Info_window({
+    super.key,required this.carPark
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      width: 200,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(color: Colors.black26, blurRadius: 10),
+          ],
+        ),
+        child: Center(child: Text(carPark["Car_park_name"], style: TextStyle(fontSize: 16,color: Colors.black))),
+      ),
+    );
   }
 }
 

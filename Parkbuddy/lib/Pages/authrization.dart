@@ -18,9 +18,11 @@ class _PagedeciderState extends State<Pagedecider> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+
             return HomePage();
           } else {
             //return Signin(); should be used later
+
             return Signin();
           }
         },

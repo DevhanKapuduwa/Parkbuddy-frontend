@@ -41,17 +41,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   getcuruser() async {
-    var input= Searchbar_controller.text;
-    try{
-      suggest_palces= await placesuggestion(input);
-      print("&*1");
-      print(suggest_palces);
+    current_User=await getUser(widget.user?.email??"default");
+    setState(() {
 
-    }
-    catch(e){
-      print("&*2");
-      print(e);
-    }
+      current_User=current_User;
+    });
 
 
 
@@ -68,7 +62,6 @@ class _HomePageState extends State<HomePage> {
     final shop = context.read<Shop>();
     displayedParks = shop.bookNowParks;
     getcuruser();
-    print("Now User: $current_User");
   }
 
   @override

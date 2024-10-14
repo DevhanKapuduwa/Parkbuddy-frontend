@@ -13,9 +13,8 @@ Future<MobileUser> getUser(String userId) async {
 
   try {
     DocumentSnapshot doc = await docRef.get();
-    print("Getting user");
     var cur_instance_user= MobileUser.fromDocument(doc);
-    print("Result++:");
+
     print(cur_instance_user.Useremail);
     return cur_instance_user;
   } catch (e) {
