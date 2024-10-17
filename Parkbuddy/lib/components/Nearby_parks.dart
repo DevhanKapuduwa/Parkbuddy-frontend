@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plz/Pages/shop.dart';
 
 
 
@@ -93,8 +94,10 @@ Future<List<Object?>> getNearbyCarParks(double? userLat, double? userLon, double
 }
 
 class CarParkMap extends StatefulWidget {
+  final List<Park> CarPark_list;
   LatLng? Input_location=null;
-  CarParkMap({super.key,this.Input_location});
+
+  CarParkMap({super.key,this.Input_location,required this.CarPark_list});
 
   @override
   _CarParkMapState createState() => _CarParkMapState();
@@ -178,8 +181,10 @@ class _CarParkMapState extends State<CarParkMap> {
           markerId: MarkerId(carPark['Car_park_id'].toString()), // Use a unique marker ID
           position: position,
           onTap: () {
+            print("@@^^"+carPark.toString());
+
             custom_info_window_controller.addInfoWindow!(
-              Info_window(carPark: carPark),
+              Info_window(carPark: carPark,carParkList: this.widget.CarPark_list,),
               position, // Position of the marker where the info window should appear
             );
           },
@@ -226,12 +231,22 @@ class _CarParkMapState extends State<CarParkMap> {
 
 class Info_window extends StatelessWidget {
   final Map<String, dynamic> carPark;
+  final List<Park> carParkList;
   const Info_window({
-    super.key,required this.carPark
+    super.key,
+    required this.carPark,
+    required this.carParkList
   });
+
+
 
   @override
   Widget build(BuildContext context) {
+    Park? getpark(){
+
+    }
+    print("**^");
+    print(carPark);
     return SizedBox(
       height: 100,
       width: 200,

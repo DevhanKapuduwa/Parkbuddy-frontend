@@ -336,10 +336,6 @@ class _HomePageState extends State<HomePage> {
                         MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CarParkMap()),//car park map is a temporary
-                    );
                   },
                   child: Container(
                     width: 154,

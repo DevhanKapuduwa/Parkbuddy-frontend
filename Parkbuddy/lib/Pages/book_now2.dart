@@ -70,7 +70,7 @@ class _BookNowPageState extends State<BookNowPage> {
   }
 
   Future<void> _initializeDisplayedParks() async {
-    // Get the parks data from the database
+
     List<Park> parks = await getparks();
     // Update the state with the fetched parks
     setState(() {
@@ -87,7 +87,7 @@ class _BookNowPageState extends State<BookNowPage> {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(title: Text("Places"),),
-          body: CarParkMap(Input_location: Coordinates),
+          body: CarParkMap(Input_location: Coordinates,CarPark_list: displayedParks,),
         ),
       ),
     );
@@ -313,7 +313,7 @@ class _BookNowPageState extends State<BookNowPage> {
 
           else ...[
             Container(
-              child: CarParkMap(),
+              child: CarParkMap(Input_location: null,CarPark_list: displayedParks),
               height: 500,
 
             ),
