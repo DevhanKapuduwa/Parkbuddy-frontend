@@ -2,15 +2,12 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:plz/Pages/map_page.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
-import 'package:plz/components/GoogleMap.dart';
 import 'package:plz/components/Google_place_autocomplete.dart';
 import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/user.dart';
-import 'package:provider/provider.dart';
 
 import '../components/connect_firebase.dart';
 import '../components/park_tile.dart';

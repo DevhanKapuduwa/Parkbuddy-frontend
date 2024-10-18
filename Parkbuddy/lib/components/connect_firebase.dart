@@ -6,22 +6,44 @@ import '../Pages/shop.dart';
 
 var Park_lot_status={};
 
+// Future<MobileUser> getUser(String userId) async {
+//   final db = FirebaseFirestore.instance;
+//
+//   final docRef = db.collection("Users").doc(userId);
+//   final Vehicle_ref=db.collection("Users").doc(userId).collection("vehicles");
+//
+//   try {
+//     DocumentSnapshot doc = await docRef.get();
+//
+//     var cur_instance_user= MobileUser.fromDocument(doc);
+//
+//     print(cur_instance_user.Useremail);
+//     return cur_instance_user;
+//   } catch (e) {
+//     print("Error getting user: $e");
+//     rethrow;
+//   }
+// }
 Future<MobileUser> getUser(String userId) async {
   final db = FirebaseFirestore.instance;
 
   final docRef = db.collection("Users").doc(userId);
+  final vehicleRef = db.collection("Users").doc(userId).collection("vehicles");
 
   try {
+    // Fetch user document
     DocumentSnapshot doc = await docRef.get();
-    var cur_instance_user= MobileUser.fromDocument(doc);
+    QuerySnapshot vehicleSnapshot = await vehicleRef.get();
+    var curInstanceUser = MobileUser.fromDocument(doc,vehicleSnapshot);
 
-    print(cur_instance_user.Useremail);
-    return cur_instance_user;
+
+    return curInstanceUser;
   } catch (e) {
-    print("Error getting user: $e");
+    print("Error getting user or vehicles: $e");
     rethrow;
   }
 }
+
 
 Future<List<Park>> getParks() async {
   final db = FirebaseFirestore.instance;

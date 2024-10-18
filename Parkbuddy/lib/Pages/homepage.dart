@@ -20,6 +20,7 @@ import 'package:plz/components/connect_firebase.dart';
 import 'package:plz/components/park_tile.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
+import '../components/display_vehicles.dart';
 import 'book_now2.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,6 +43,8 @@ class _HomePageState extends State<HomePage> {
 
   getcuruser() async {
     current_User=await getUser(widget.user?.email??"default");
+    print("@@@");
+    print(current_User);
     setState(() {
 
       current_User=current_User;
@@ -178,6 +181,19 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).pop(); // Close the drawer
                 Navigator.of(context).pushNamed('/page2');
+              },
+            ),
+            Divider(
+              height: 3,
+              color: Colors.grey.shade800,
+            ),
+            ListTile(
+              leading: Icon(Icons.view_list),
+              title: Text('My Vehicles'),
+              onTap: () {
+                print("%%%");
+                print(current_User.Ownedvehicles);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DisplayVehicles(currentUser: current_User)));
               },
             ),
             Divider(
