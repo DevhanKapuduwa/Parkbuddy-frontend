@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../Pages/shop.dart';
 
-class ParkTile extends StatelessWidget {
+class ParkTile_map extends StatelessWidget {
   final Park park;
   final VoidCallback onTap;
 
-  ParkTile({
+  ParkTile_map({
     required this.park,
     required this.onTap,
   });
@@ -14,7 +14,7 @@ class ParkTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0, bottom: 30.0,right: 8),
+      padding: const EdgeInsets.only(left: 5.0, bottom: 5.0,right: 5,top: 5),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -24,47 +24,48 @@ class ParkTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(3),
             color: Colors.black,
           ),
-          child: Column(
+          child: Stack(
             children: [
-              // Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image.asset(park.imagePath),
+                child: Image.asset(
+                  park.imagePath,
+                ),
               ),
-              SizedBox(height: 10),
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
-                child: Column(
-                  children: [
-                    Text(
-                      park.name,
-                      style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
+              // The widget you want to overlay on top of the image
+              Positioned(
+                bottom: 0, // You can adjust this to control the position
 
-                  ],
-                ),
-              ),
-              // Price
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(6),
+                // You can adjust this to control the position
+                child: (Container(
+                  width: 283,
+                  padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+                  decoration: BoxDecoration(
+                    border: Border.symmetric(horizontal: BorderSide(width: 3,color: Colors.orange),vertical: BorderSide(width: 2,color: Colors.orange)),
+
+                    color: Colors.black.withOpacity(0.9), // Add some transparency
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        park.name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white, // Text color for contrast
+                        ),
                       ),
-                      child: Row(children: [Text("View"),Icon(Icons.add)],),
-                    ),
-                  ],
-                ),
+                      const Padding(
+                        padding: EdgeInsets.all(3.0),
+                        child: Icon(Icons.navigate_next,color: Colors.white,),
+                      )
+                    ],
+                  ),
+                )),
               ),
             ],
-          ),
+          )
         ),
       ),
     );

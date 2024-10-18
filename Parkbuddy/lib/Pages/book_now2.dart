@@ -87,7 +87,7 @@ class _BookNowPageState extends State<BookNowPage> {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(title: Text("Places"),),
-          body: CarParkMap(Input_location: Coordinates,CarPark_list: displayedParks,),
+          body: CarParkMap(Input_location: Coordinates,CarPark_list: displayedParks,CurrentUser: widget.current_User,),
         ),
       ),
     );
@@ -313,7 +313,7 @@ class _BookNowPageState extends State<BookNowPage> {
 
           else ...[
             Container(
-              child: CarParkMap(Input_location: null,CarPark_list: displayedParks),
+              child: CarParkMap(Input_location: null,CarPark_list: displayedParks,CurrentUser: widget.current_User,),
               height: 500,
 
             ),

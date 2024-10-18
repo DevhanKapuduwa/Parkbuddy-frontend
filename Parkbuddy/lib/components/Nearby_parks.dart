@@ -1,10 +1,15 @@
 import 'dart:math';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:plz/Pages/shop.dart';
+import 'package:plz/components/Park_tile_info_window.dart';
+import 'package:plz/components/user.dart';
+
+import '../Pages/park_details.dart';
 
 
 
@@ -95,9 +100,10 @@ Future<List<Object?>> getNearbyCarParks(double? userLat, double? userLon, double
 
 class CarParkMap extends StatefulWidget {
   final List<Park> CarPark_list;
-  LatLng? Input_location=null;
+  LatLng? Input_location;
+  MobileUser CurrentUser;
 
-  CarParkMap({super.key,this.Input_location,required this.CarPark_list});
+  CarParkMap({super.key,required this.Input_location,required this.CarPark_list,required this.CurrentUser});
 
   @override
   _CarParkMapState createState() => _CarParkMapState();
@@ -143,19 +149,29 @@ class _CarParkMapState extends State<CarParkMap> {
     print("&&");
     print(Currentlocation?.longitude);
     List<Object?> nearbyCarParks = await getNearbyCarParks(Currentlocation?.latitude, Currentlocation?.longitude, 15);
+    print("%%");
+    print(nearbyCarParks);
 
 
     setState(() {
+
       Currentlocation=Currentlocation;
       _moveCameraToCurrentLocation();
+      print("^!^^!^");
       carParks = nearbyCarParks; // Update the state with the list of car parks
-      _loadMarkers(); // Call the marker loading function after updating the car parks
+
+      _loadMarkers(nearbyCarParks);
+
     });
   }
 
-  void _moveCameraToCurrentLocation() {
+
+  void _moveCameraToCurrentLocation() async {
+    print("Current locations:"+Currentlocation.toString());
+
     if (_controller != null && Currentlocation != null) {
-      _controller.animateCamera(
+
+      await _controller.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(
@@ -167,14 +183,19 @@ class _CarParkMapState extends State<CarParkMap> {
         ),
       );
     }
+    print("****!!");
+    return;
   }
 
-  void _loadMarkers() {
-    _markers.clear(); // Clear previous markers to avoid duplication
+  void _loadMarkers(CarParls) {
+    print("^^^^^");
+    // _markers.clear(); // Clear previous markers to avoid duplication
 
-    carParks.forEach((carPark) {
+
+    CarParls.forEach((carPark) {
       GeoPoint point = carPark['location'];
       LatLng position = LatLng(point.latitude, point.longitude);
+
 
       _markers.add(
         Marker(
@@ -184,7 +205,7 @@ class _CarParkMapState extends State<CarParkMap> {
             print("@@^^"+carPark.toString());
 
             custom_info_window_controller.addInfoWindow!(
-              Info_window(carPark: carPark,carParkList: this.widget.CarPark_list,),
+              Info_window(carPark: carPark,carParkList: this.widget.CarPark_list,Current_user: widget.CurrentUser,),
               position, // Position of the marker where the info window should appear
             );
           },
@@ -195,10 +216,10 @@ class _CarParkMapState extends State<CarParkMap> {
   @override
   Widget build(BuildContext context) {
     return Container(child:Stack(children: [ GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(Currentlocation?.latitude??0,Currentlocation?.longitude??0),
-          zoom: 7,
-        ),
+      initialCameraPosition: CameraPosition(
+        target: LatLng(Currentlocation?.latitude??0,Currentlocation?.longitude??0),
+        zoom: 7,
+      ),
         myLocationEnabled: true,
         markers: _markers,
 
@@ -232,20 +253,30 @@ class _CarParkMapState extends State<CarParkMap> {
 class Info_window extends StatelessWidget {
   final Map<String, dynamic> carPark;
   final List<Park> carParkList;
+  final MobileUser Current_user;
   const Info_window({
     super.key,
     required this.carPark,
-    required this.carParkList
+    required this.carParkList,
+    required this.Current_user
   });
 
 
 
   @override
   Widget build(BuildContext context) {
-    Park? getpark(){
-
+    Park Showing_park=Park(imagePath: "imagePath", name: "name", price: "price", rating: "rating", description: "description", extension: "extension", id: "id");
+    for (var park in carParkList) {
+      if(park.name==carPark["Car_park_name"]) {
+        Showing_park=park;
+        break;
+      }
     }
+
+
+
     print("**^");
+    print(Showing_park.name);
     print(carPark);
     return SizedBox(
       height: 100,
@@ -258,7 +289,11 @@ class Info_window extends StatelessWidget {
             BoxShadow(color: Colors.black26, blurRadius: 10),
           ],
         ),
-        child: Center(child: Text(carPark["Car_park_name"], style: TextStyle(fontSize: 16,color: Colors.black))),
+        // child: Center(child: Text(carPark["Car_park_name"], style: TextStyle(fontSize: 16,color: Colors.black))),
+        child: ParkTile_map(park: Showing_park,onTap: ()=>{
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ParkDetailsPage(park: Showing_park, current_User: Current_user)))
+
+        },),
       ),
     );
   }
