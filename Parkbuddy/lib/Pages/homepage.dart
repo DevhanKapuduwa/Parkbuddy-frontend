@@ -15,6 +15,7 @@ import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/update_profile.dart';
 import 'package:plz/components/Google_place_autocomplete.dart';
 import 'package:plz/components/Nearby_parks.dart';
+import 'package:plz/components/Notification.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
 import 'package:plz/components/park_tile.dart';
@@ -352,6 +353,8 @@ class _HomePageState extends State<HomePage> {
                         MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                   ),
                   onPressed: () {
+
+                    showNotification(body: "Clicked",title: "ParkBuddy");
                   },
                   child: Container(
                     width: 154,

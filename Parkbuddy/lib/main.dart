@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:plz/Pages/car_image_provider.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/welcome.dart';
+import 'package:plz/components/Notification.dart';
 import 'package:provider/provider.dart';
 
 import 'Pages/profile_image_provider.dart';
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await initializeNotifications();
 
   runApp(
     MultiProvider(

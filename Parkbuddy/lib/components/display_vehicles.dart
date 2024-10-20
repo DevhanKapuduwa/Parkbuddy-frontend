@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../components/user.dart';
 
 class DisplayVehicles extends StatefulWidget {
