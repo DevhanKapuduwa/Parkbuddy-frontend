@@ -27,26 +27,63 @@ class Vehicle {
   }
 }
 
+class Booking {
+  final String bookingId;
+  final String vehicleId;
+  final String parkLotId;
+  final DateTime startTime;
+  final DateTime endTime;
+  final double totalAmount;
+
+  Booking({
+    required this.bookingId,
+    required this.vehicleId,
+    required this.parkLotId,
+    required this.startTime,
+    required this.endTime,
+    required this.totalAmount,
+  });
+
+  // Factory method to create a Booking instance from a Firestore document
+  factory Booking.fromDocument(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+    return Booking(
+      bookingId: doc.id, // assuming booking ID is the document ID
+      vehicleId: data['vehicle_id'] ?? '',
+      parkLotId: data['parklot_id'] ?? '',
+      startTime: (data['start_time'] as Timestamp).toDate(),
+      endTime: (data['end_time'] as Timestamp).toDate(),
+      totalAmount: data['total_amount'] != null ? data['total_amount'].toDouble() : 0.0,
+    );
+  }
+}
+
+
 class MobileUser {
   final String Username;
   final String Useremail;
   final List<Vehicle> Ownedvehicles;
+  final List<Booking> Bookings;
 
   MobileUser({
     required this.Username,
     required this.Useremail,
-    required this.Ownedvehicles
+    required this.Ownedvehicles,
+    required this.Bookings
   });
 
-  factory MobileUser.fromDocument(DocumentSnapshot doc,QuerySnapshot vehicleSnapshot) {
+  factory MobileUser.fromDocument(DocumentSnapshot doc,QuerySnapshot vehicleSnapshot,QuerySnapshot bookingSnapshot) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     List<Vehicle> vehicles = vehicleSnapshot.docs.map((doc) => Vehicle.fromDocument(doc)).toList();
+    List<Booking> _bookings = bookingSnapshot.docs.map((doc)=>Booking.fromDocument(doc)).toList();
 
     return MobileUser(
       Username: data['Username'] ?? '',
       Useremail: data['Useremail'] ?? '',
       Ownedvehicles: vehicles,
+      Bookings: _bookings
     );
   }
 

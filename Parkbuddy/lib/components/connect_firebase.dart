@@ -29,12 +29,14 @@ Future<MobileUser> getUser(String userId) async {
 
   final docRef = db.collection("Users").doc(userId);
   final vehicleRef = db.collection("Users").doc(userId).collection("vehicles");
+  final bookingRef = db.collection("Users").doc(userId).collection("bookings");
 
   try {
     // Fetch user document
     DocumentSnapshot doc = await docRef.get();
     QuerySnapshot vehicleSnapshot = await vehicleRef.get();
-    var curInstanceUser = MobileUser.fromDocument(doc,vehicleSnapshot);
+    QuerySnapshot bookingSnapshot = await bookingRef.get();
+    var curInstanceUser = MobileUser.fromDocument(doc,vehicleSnapshot,bookingSnapshot);
 
 
     return curInstanceUser;

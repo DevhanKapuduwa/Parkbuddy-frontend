@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController Searchbar_controller=TextEditingController();
   var suggest_palces;
   var current_User = MobileUser(
-      Username: "Default", Useremail: "Defaultmail", Ownedvehicles: []);
+      Username: "Default", Useremail: "Defaultmail", Ownedvehicles: [],Bookings: []);
 
   void userlogout() {
     FirebaseAuth.instance.signOut();
