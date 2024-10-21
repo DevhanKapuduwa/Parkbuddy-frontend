@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Pages/setting.dart';
-import 'contants_set.dart';
+import '../../Pages/setting.dart';
+import '../contants_set.dart';
 
 class SettingTile extends StatelessWidget {
   final Setting setting;

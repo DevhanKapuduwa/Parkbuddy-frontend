@@ -3,7 +3,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/profile.dart';
 
 import '../components/avatar_card.dart';
-import '../components/setting_tile.dart';
+import '../components/List_tiles/setting_tile.dart';
 import '../components/support_card.dart';
 import 'homepage.dart';
 import 'notifications.dart';

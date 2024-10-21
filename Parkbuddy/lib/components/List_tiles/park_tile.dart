@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Pages/shop.dart';
+import '../../Pages/shop.dart';
 
 class ParkTile extends StatelessWidget {
   final Park park;

@@ -33,7 +33,7 @@ class Booking {
   final String parkLotId;
   final DateTime startTime;
   final DateTime endTime;
-  final double totalAmount;
+  final String totalAmount;
 
   Booking({
     required this.bookingId,
@@ -50,11 +50,11 @@ class Booking {
 
     return Booking(
       bookingId: doc.id, // assuming booking ID is the document ID
-      vehicleId: data['vehicle_id'] ?? '',
+      vehicleId: data['vehicle_id'] ?? 'd',
       parkLotId: data['parklot_id'] ?? '',
       startTime: (data['start_time'] as Timestamp).toDate(),
       endTime: (data['end_time'] as Timestamp).toDate(),
-      totalAmount: data['total_amount'] != null ? data['total_amount'].toDouble() : 0.0,
+      totalAmount: data['total_amount'],
     );
   }
 }

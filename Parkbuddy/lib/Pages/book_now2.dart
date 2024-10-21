@@ -10,7 +10,7 @@ import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/user.dart';
 
 import '../components/connect_firebase.dart';
-import '../components/park_tile.dart';
+import '../components/List_tiles/park_tile.dart';
 import 'homepage.dart';
 import 'notifications.dart';
 
@@ -33,11 +33,6 @@ class _BookNowPageState extends State<BookNowPage> {
   @override
   void initState() {
     super.initState();
-    // Initialize the displayedParks list here
-    // final shop = context.read<Shop>();
-    // displayedParks = shop.bookNowParks;
-    // print("Park list");
-    // print(getparks());
     _initializeDisplayedParks();
   }
 

@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:plz/Pages/shop.dart';
-import 'package:plz/components/Park_tile_info_window.dart';
+import 'package:plz/components/List_tiles/Park_tile_info_window.dart';
 import 'package:plz/components/user.dart';
 
 import '../Pages/park_details.dart';

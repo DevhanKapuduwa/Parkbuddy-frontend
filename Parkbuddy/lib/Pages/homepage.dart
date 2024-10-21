@@ -18,7 +18,7 @@ import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/Notification.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
-import 'package:plz/components/park_tile.dart';
+import 'package:plz/components/List_tiles/park_tile.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 import '../components/display_vehicles.dart';
@@ -353,8 +353,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                   ),
                   onPressed: () {
-
-                    showNotification(body: "Clicked",title: "ParkBuddy");
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingsPage(Booking_list: current_User.Bookings)));
                   },
                   child: Container(
                     width: 154,

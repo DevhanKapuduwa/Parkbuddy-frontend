@@ -37,9 +37,8 @@ Future<MobileUser> getUser(String userId) async {
     QuerySnapshot vehicleSnapshot = await vehicleRef.get();
     QuerySnapshot bookingSnapshot = await bookingRef.get();
     var curInstanceUser = MobileUser.fromDocument(doc,vehicleSnapshot,bookingSnapshot);
-
-
     return curInstanceUser;
+    // return MobileUser(Username: "Username", Useremail: "Useremail", Ownedvehicles: [], Bookings: []);
   } catch (e) {
     print("Error getting user or vehicles: $e");
     rethrow;
