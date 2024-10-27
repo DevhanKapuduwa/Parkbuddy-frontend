@@ -31,6 +31,7 @@ class Booking {
   final String bookingId;
   final String vehicleId;
   final String parkLotId;
+  final String parkName;
   final DateTime startTime;
   final DateTime endTime;
   final String totalAmount;
@@ -42,6 +43,7 @@ class Booking {
     required this.startTime,
     required this.endTime,
     required this.totalAmount,
+    required this.parkName
   });
 
   // Factory method to create a Booking instance from a Firestore document
@@ -55,8 +57,21 @@ class Booking {
       startTime: (data['start_time'] as Timestamp).toDate(),
       endTime: (data['end_time'] as Timestamp).toDate(),
       totalAmount: data['total_amount'],
+      parkName: data['park_name']
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'parklot_id': this.parkLotId,
+      'vehicle_id': this.vehicleId,
+      'start_time': this.startTime,
+      'end_time': this.endTime,
+      'total_amount': this.totalAmount,
+      'park_name':this.parkName
+    };
+  }
+
 }
 
 

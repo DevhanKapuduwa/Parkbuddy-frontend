@@ -24,6 +24,29 @@ var Park_lot_status={};
 //     rethrow;
 //   }
 // }
+Future<String?> addBookingToFirestore(Booking booking,MobileUser _user) async {
+  try {
+    // Reference to Firestore collection (you can adjust the collection name)
+    final db = FirebaseFirestore.instance;
+    CollectionReference bookings = db.collection("Users").doc(_user.Useremail).collection("bookings");
+
+    // Add the booking data to Firestore
+
+    DocumentReference docRef = await bookings.add(booking.toMap());
+
+    // Retrieve the document ID
+    String documentId = docRef.id;
+    print("Booking successfully added with ID: $documentId");
+
+    // You can return the documentId or store it as needed
+    return documentId;
+
+    print("Booking successfully added!");
+  } catch (e) {
+    print("Failed to add booking: $e");
+  }
+}
+
 Future<MobileUser> getUser(String userId) async {
   final db = FirebaseFirestore.instance;
 
@@ -43,6 +66,24 @@ Future<MobileUser> getUser(String userId) async {
     print("Error getting user or vehicles: $e");
     rethrow;
   }
+}
+
+Future<Park?> getCarParkById(String parkId) async {
+  try {
+    // Reference to the Car_Parks collection
+    final carParksRef = FirebaseFirestore.instance.collection('Car_Parks');
+
+    // Retrieve the document by parkId
+    DocumentSnapshot carParkDoc = await carParksRef.doc(parkId).get();
+    Park newPark=Park.fromDocument(carParkDoc);
+    newPark.printDetails();
+    return newPark;
+  }
+  catch(e){
+
+
+  }
+
 }
 
 
@@ -135,7 +176,7 @@ get_info_about_Car_park() async{//this function should be upgraded as taking par
   );
   print('Final status: ${Park_lot_status}');
 }
-
+//events adding done through shop class
 void addevent(String Username,DateTime start,DateTime end,String Vehicle_type,String Vehicle_number) async{
   await get_info_about_Car_park();
 

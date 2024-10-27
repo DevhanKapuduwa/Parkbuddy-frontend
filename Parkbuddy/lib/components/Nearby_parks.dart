@@ -265,7 +265,7 @@ class Info_window extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Park Showing_park=Park(imagePath: "imagePath", name: "name", price: "price", rating: "rating", description: "description", extension: "extension", id: "id");
+    Park Showing_park=Park(imagePath: "imagePath", name: "name", price: "price", rating: "rating", description: "description", extension: "extension", id: "id",location: GeoPoint(6.917547106356931, 79.85492520678427 ));
     for (var park in carParkList) {
       if(park.name==carPark["Car_park_name"]) {
         Showing_park=park;
@@ -273,11 +273,6 @@ class Info_window extends StatelessWidget {
       }
     }
 
-
-
-    print("**^");
-    print(Showing_park.name);
-    print(carPark);
     return SizedBox(
       height: 100,
       width: 200,

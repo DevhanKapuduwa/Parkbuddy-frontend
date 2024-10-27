@@ -8,8 +8,6 @@ class BookingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("&**&*");
-    print(Booking_list[0].vehicleId);
 
     return Scaffold(
       appBar: AppBar(
@@ -18,7 +16,15 @@ class BookingsPage extends StatelessWidget {
 
 
       ),
-      body: ListView.builder(
+      body: Booking_list.isEmpty?Center(
+        child: Text(
+          "No Currently bookings..",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600
+          ),
+        ),
+      ) :ListView.builder(
           itemCount: Booking_list.length,
             itemBuilder: (context,index)
             {

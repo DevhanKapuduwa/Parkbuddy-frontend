@@ -5,7 +5,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
-import 'package:plz/components/Google_place_autocomplete.dart';
+import 'package:plz/components/Google_Maps_Functions.dart';
 import 'package:plz/components/Nearby_parks.dart';
 import 'package:plz/components/user.dart';
 
