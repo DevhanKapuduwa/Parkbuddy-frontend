@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:plz/Pages/add_vehicle.dart';
 import 'package:plz/Pages/authrization.dart';
 import 'package:plz/Pages/bookings.dart';
@@ -13,14 +12,12 @@ import 'package:plz/Pages/park_details.dart';
 import 'package:plz/Pages/profile.dart';
 import 'package:plz/Pages/shop.dart';
 import 'package:plz/Pages/update_profile.dart';
-import 'package:plz/components/Google_Maps_Functions.dart';
-import 'package:plz/components/Nearby_parks.dart';
-import 'package:plz/components/Notification.dart';
+import 'package:plz/components/List_tiles/park_tile.dart';
 import 'package:plz/components/avatar_card.dart';
 import 'package:plz/components/connect_firebase.dart';
-import 'package:plz/components/List_tiles/park_tile.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
+
 import '../components/display_vehicles.dart';
 import 'book_now2.dart';
 
@@ -33,27 +30,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController Searchbar_controller=TextEditingController();
+  TextEditingController Searchbar_controller = TextEditingController();
   var suggest_palces;
   var current_User = MobileUser(
-      Username: "Default", Useremail: "Defaultmail", Ownedvehicles: [],Bookings: []);
+      Username: "Default",
+      Useremail: "Defaultmail",
+      Ownedvehicles: [],
+      Bookings: []);
 
   void userlogout() {
     FirebaseAuth.instance.signOut();
   }
 
   getcuruser() async {
-    current_User=await getUser(widget.user?.email??"default");
+    current_User = await getUser(widget.user?.email ?? "default");
     print("@@@");
     print(current_User);
     setState(() {
-
-      current_User=current_User;
+      current_User = current_User;
     });
-
-
-
-
   }
 
   // Currently displayed parks
@@ -194,7 +189,12 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 print("%%%");
                 print(current_User.Ownedvehicles);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DisplayVehicles(currentUser: current_User)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DisplayVehicles(
+                              currentUser: current_User,
+                            )));
               },
             ),
             Divider(
@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
-              controller:Searchbar_controller,
+              controller: Searchbar_controller,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search),
                 hintText: 'Search your desired car park....',
@@ -353,7 +353,11 @@ class _HomePageState extends State<HomePage> {
                         MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>BookingsPage(Booking_list: current_User.Bookings)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BookingsPage(
+                                Booking_list: current_User.Bookings)));
                   },
                   child: Container(
                     width: 154,

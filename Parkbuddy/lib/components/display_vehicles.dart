@@ -71,7 +71,7 @@ class _DisplayVehiclesState extends State<DisplayVehicles> {
     );
   }
 
-  // Helper function to return the appropriate icon based on vehicle type
+// Helper function to return the appropriate icon based on vehicle type
   IconData _getVehicleIcon(String type) {
     switch (type) {
       case "Car":
