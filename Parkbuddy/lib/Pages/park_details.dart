@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:plz/components/user.dart';
 import 'package:provider/provider.dart';
 
+import '../components/display_vehicle2.dart';
 import 'homepage.dart';
 import 'notifications.dart';
 import 'profile.dart';
@@ -19,6 +20,12 @@ class ParkDetailsPage extends StatefulWidget {
 
 class _ParkDetailsPageState extends State<ParkDetailsPage> {
   var _selectedTime = TimeOfDay.now();
+
+  // var current_User = MobileUser(
+  //     Username: "Default",
+  //     Useremail: "Defaultmail",
+  //     Ownedvehicles: [],
+  //     Bookings: []);
 
   var _selectedDate = DateTime.now();
 
@@ -169,11 +176,55 @@ class _ParkDetailsPageState extends State<ParkDetailsPage> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     Navigator.pop(context); // Close the dialog
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => DisplayVehicles(
+                    //             currentUser: widget.current_User),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: Text(
+                    //     "Confirm",
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    // ),
+
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context); // Close the dialog
-                        showConfirmationDialog(
-                            selectedVehicle); // Pass the selected vehicle to the confirmation dialog
+                        if (widget.current_User.Ownedvehicles.isNotEmpty) {
+                          // Navigate to the filtered DisplayVehicles2 page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DisplayVehicles2(
+                                currentUser: widget.current_User,
+                                selectedVehicleType:
+                                    selectedVehicle, // Pass the selected type
+                              ),
+                            ),
+                          );
+                        } else {
+                          // Show a dialog if no vehicles exist
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text("No Vehicles Found"),
+                              content: Text("You have no registered vehicles."),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                       },
                       child: Text(
                         "Confirm",
