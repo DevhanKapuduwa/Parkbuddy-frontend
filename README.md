@@ -1,16 +1,15 @@
 # ParkBuddy: Smart Parking Assistant  
 
-ParkBuddy is a mobile and web application designed to streamline parking management. By leveraging real-time data, the app optimizes parking space utilization, helping drivers find available slots quickly and allowing administrators to manage parking lots more efficiently.  
+ParkBuddy is a mobile and web integrated application designed to streamline parking management. By managing real-time data, the app optimizes parking space utilization helping drivers find available slots quickly and allowing administrators to manage parking lots more efficiently.  
 
 ## Features  
 
 ### For Users  
-- Real-time availability of parking slots.  
-- Navigation to the nearest free parking space.  
-- Digital parking ticket management.  
+- Can check the real-time availability of parking slots.  
+- Digital parking ticket management and digital payment methods.  
 
 ### For Administrators  
-- Manage parking slots (add, edit, delete).  
+- Manage parking slots (functionalities such as, addition, edit and deletion of slots).  
 - Monitor parking occupancy in real-time.  
 - Analytics dashboard for usage statistics.  
 
@@ -20,8 +19,7 @@ ParkBuddy is a mobile and web application designed to streamline parking managem
 - **Database**: Firestore Firebase.  
 - **Additional Tools**: Google Maps API, Figma.  
 
-## Purpose  
-ParkBuddy aims to reduce parking congestion and improve the efficiency of parking lot management. It is designed for drivers, parking lot operators, and city authorities to create a seamless parking experience.  
+
 
 ## Installation  
 1. Clone the repository:  
